@@ -1,0 +1,116 @@
+root@sandbox-hdp src_hive]# sh execute.sh localhost:10016 table_init.sql 
+Connecting to jdbc:hive2://localhost:10016
+Connected to: Spark SQL (version 2.2.0.2.6.3.0-235)
+Driver: Hive JDBC (version 1.2.1000.2.6.3.0-235)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10016> CREATE DATABASE IF NOT EXISTS m2h3;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.119 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> use m2h3;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.016 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> set hive.exec.dynamic.partition.mode=nonstrict;
++-----------------------------------+------------+--+
+|                key                |   value    |
++-----------------------------------+------------+--+
+| hive.exec.dynamic.partition.mode  | nonstrict  |
++-----------------------------------+------------+--+
+1 row selected (0.015 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> set hive.tez.java.opts=-Xmx1024m;
++---------------------+------------+--+
+|         key         |   value    |
++---------------------+------------+--+
+| hive.tez.java.opts  | -Xmx1024m  |
++---------------------+------------+--+
+1 row selected (0.013 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> create table if not exists impression(
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> BidID String, Times_tamp String, LogType   INT, iPinYouID INT,
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> UserAgent String, IP   String, RegionID INT, CityID INT, AdExchange INT,
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> Domain String, URL String, AnonymousURL String, AdSlotID INT, AdSlotWidth INT,
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> AdSlotHeight INT, AdSlotVisibility String, AdSlotFormat String, AdSlotFloorPrice INT,
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> CreativeID String, BiddingPrice INT, PayingPrice INT, LandingPageURL String, 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> AdvertiserID INT, UserProfileIDs String)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> row format delimited fields terminated by "\t";
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.094 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> load data local inpath 'imp' into table impression;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (4.758 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> create table if not exists city(
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> CityID INT, CityName String
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> )
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> row format delimited fields terminated by "\t"; 
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.071 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> load data local inpath 'city.en.txt' into table city;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.133 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+Closing: 0: jdbc:hive2://localhost:10016
+[root@sandbox-hdp src_hive]# sh execute.sh localhost:10016 show_tables.sql
+Connecting to jdbc:hive2://localhost:10016
+Connected to: Spark SQL (version 2.2.0.2.6.3.0-235)
+Driver: Hive JDBC (version 1.2.1000.2.6.3.0-235)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10016> use m2h3; show tables;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.102 seconds)
++-----------+-------------+--------------+--+
+| database  |  tableName  | isTemporary  |
++-----------+-------------+--------------+--+
+| m2h3      | city        | false        |
+| m2h3      | impression  | false        |
++-----------+-------------+--------------+--+
+2 rows selected (0.034 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+Closing: 0: jdbc:hive2://localhost:10016
+[root@sandbox-hdp src_hive]#

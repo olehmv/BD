@@ -1,0 +1,31 @@
+[root@sandbox-hdp /]# sh src/execute.sh src/Find_the_carrier_who_served_the_biggest_number_of_flights.sql tez
+: command not founde 2: 
+src/execute.sh: line 9: syntax error: unexpected end of file
+[root@sandbox-hdp /]# vi src/execute.sh 
+[root@sandbox-hdp /]# sh src/execute.sh src/Find_the_carrier_who_served_the_biggest_number_of_flights.sql tez
+log4j:WARN No such property [maxFileSize] in org.apache.log4j.DailyRollingFileAppender.
+
+Logging initialized using configuration in file:/etc/hive/2.6.3.0-235/0/hive-log4j.properties
+OK
+Time taken: 2.005 seconds
+Query ID = root_20180107170431_ae4db510-54e9-4895-83ae-3e4a8883d773
+Total jobs = 1
+Launching Job 1 out of 1
+Status: Running (Executing on YARN cluster with App id application_1515323323941_0045)
+
+--------------------------------------------------------------------------------
+        VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+--------------------------------------------------------------------------------
+Map 1 ..........   SUCCEEDED      1          1        0        0       0       0
+Map 2 ..........   SUCCEEDED      6          6        0        0       0       0
+Reducer 3 ......   SUCCEEDED      4          4        0        0       0       0
+Reducer 4 ......   SUCCEEDED      1          1        0        0       0       0
+--------------------------------------------------------------------------------
+VERTICES: 04/04  [==========================>>] 100%  ELAPSED TIME: 13.03 s    
+--------------------------------------------------------------------------------
+OK
+Southwest Airlines Co.  1168871
+American Airlines Inc.  633857
+Skywest Airlines Inc.   597882
+Time taken: 16.473 seconds, Fetched: 3 row(s)
+[root@sandbox-hdp /]

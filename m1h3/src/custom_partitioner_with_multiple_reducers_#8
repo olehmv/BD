@@ -1,0 +1,83 @@
+D:\BD\m1h3\target\scala-2.11>yarn jar m1h3-assembly-1.jar /imp /result /city.en.txt
+18/01/02 14:50:32 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+18/01/02 14:50:32 WARN mapreduce.JobSubmitter: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+18/01/02 14:50:32 INFO input.FileInputFormat: Total input paths to process : 9
+18/01/02 14:50:33 INFO mapreduce.JobSubmitter: number of splits:12
+18/01/02 14:50:33 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1514895937685_0005
+18/01/02 14:50:33 INFO impl.YarnClientImpl: Submitted application application_1514895937685_0005
+18/01/02 14:50:33 INFO mapreduce.Job: The url to track the job: http://sandbox.hortonworks.com:8088/proxy/application_1514895937685_0005/
+18/01/02 14:50:33 INFO mapreduce.Job: Running job: job_1514895937685_0005
+18/01/02 14:50:54 INFO mapreduce.Job: Job job_1514895937685_0005 running in uber mode : false
+18/01/02 14:50:54 INFO mapreduce.Job:  map 0% reduce 0%
+18/01/02 14:51:08 INFO mapreduce.Job:  map 10% reduce 0%
+18/01/02 14:51:10 INFO mapreduce.Job:  map 21% reduce 0%
+18/01/02 14:51:11 INFO mapreduce.Job:  map 29% reduce 0%
+18/01/02 14:51:12 INFO mapreduce.Job:  map 45% reduce 0%
+18/01/02 14:51:13 INFO mapreduce.Job:  map 47% reduce 0%
+18/01/02 14:51:14 INFO mapreduce.Job:  map 50% reduce 0%
+18/01/02 14:51:21 INFO mapreduce.Job:  map 58% reduce 0%
+18/01/02 14:51:22 INFO mapreduce.Job:  map 75% reduce 0%
+18/01/02 14:51:25 INFO mapreduce.Job:  map 83% reduce 0%
+18/01/02 14:51:26 INFO mapreduce.Job:  map 83% reduce 7%
+18/01/02 14:51:31 INFO mapreduce.Job:  map 92% reduce 14%
+18/01/02 14:51:32 INFO mapreduce.Job:  map 100% reduce 32%
+18/01/02 14:51:33 INFO mapreduce.Job:  map 100% reduce 100%
+18/01/02 14:51:35 INFO mapreduce.Job: Job job_1514895937685_0005 completed successfully
+18/01/02 14:51:35 INFO mapreduce.Job: Counters: 49
+        File System Counters
+                FILE: Number of bytes read=61700
+                FILE: Number of bytes written=1862470
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=1112134436
+                HDFS: Number of bytes written=6081
+                HDFS: Number of read operations=60
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=8
+        Job Counters
+                Launched map tasks=12
+                Launched reduce tasks=4
+                Data-local map tasks=12
+                Total time spent by all maps in occupied slots (ms)=145808
+                Total time spent by all reduces in occupied slots (ms)=49183
+                Total time spent by all map tasks (ms)=145808
+                Total time spent by all reduce tasks (ms)=49183
+                Total vcore-seconds taken by all map tasks=145808
+                Total vcore-seconds taken by all reduce tasks=49183
+                Total megabyte-seconds taken by all map tasks=149307392
+                Total megabyte-seconds taken by all reduce tasks=50363392
+        Map-Reduce Framework
+                Map input records=3158171
+                Map output records=1652
+                Map output bytes=58372
+                Map output materialized bytes=61964
+                Input split bytes=1296
+                Combine input records=0
+                Combine output records=0
+                Reduce input groups=330
+                Reduce shuffle bytes=61964
+                Reduce input records=1652
+                Reduce output records=330
+                Spilled Records=3304
+                Shuffled Maps =48
+                Failed Shuffles=0
+                Merged Map outputs=48
+                GC time elapsed (ms)=13842
+                CPU time spent (ms)=56161
+                Physical memory (bytes) snapshot=4098363392
+                Virtual memory (bytes) snapshot=4700934144
+                Total committed heap usage (bytes)=2991063040
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=1112076944
+        File Output Format Counters
+                Bytes Written=6081
+
+D:\BD\m1h3\target\scala-2.11>

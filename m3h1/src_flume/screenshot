@@ -1,0 +1,20 @@
+[root@sandbox-hdp flume]# cat output.txt | tail
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.13.143.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.15.124.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.8.217.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.9.31.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.12.143.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.8.239.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.9.126.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.9.15.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.7.67.
+[root@sandbox-hdp flume]# hdfs dfs -cat /user/root/flume/* | tail
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.13.143.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.15.124.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.8.217.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.9.31.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.12.143.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.8.239.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.9.126.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.9.15.
+Nov 16 10:21:22 ephubudw3000 avahi-daemon[990]: Invalid response packet from host 10.0.7.67.

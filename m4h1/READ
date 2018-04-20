@@ -1,0 +1,4 @@
+Usage:
+        1) execute from BD folder command -> sbt m4h1/assembly, this will generate m4h1-assembly-1.jar file
+        2) put files: bids, motels, exchange_rates in hdfs location -> /user/<user name>/spark
+        3) from m4h1-assembly-1.jar file location execute command -> sh cluster_submit.sh <user name>, this will run spark job

@@ -1,0 +1,11 @@
+Usage:
+    1)Put DataSet files(cite.en.txt, dir named imp with impression files) in /home/hive.
+    2)Package UserAgentUDF jar and put in /home/hive
+    2)Run execute.sh script from src_hive directory:
+        usage - sh execute.sh <hive-server> <hive script file> <execute engine>
+	example:    sh execute.sh localhost:10016 table_init.sql spark
+                sh execute.sh localhost:10016 ***queries.sql spark
+                OR  
+                sh execute.sh localhost:10000 table_init.sql mr
+                sh execute.sh localhost:10000 ***queries.sql mr
+                sh execute.sh localhost:10000 ***queries.sql tez

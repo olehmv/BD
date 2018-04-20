@@ -1,0 +1,33 @@
+tez: two job, mapreduce: 3 jobs: 1 for temp table creation, 2 for query stages:
+            
+             0: jdbc:hive2://localhost:10000> create temporary table if not exists cancelled_flights as
+             0: jdbc:hive2://localhost:10000> 
+             0: jdbc:hive2://localhost:10000> select flight2007_orc.uniquecarrier, airports_orc.city, count(1) as city_flights_count
+             0: jdbc:hive2://localhost:10000> 
+             0: jdbc:hive2://localhost:10000> from flight2007_orc, airports_orc
+             0: jdbc:hive2://localhost:10000> 
+             0: jdbc:hive2://localhost:10000> where airports_orc.iata = flight2007_orc.origin
+             0: jdbc:hive2://localhost:10000> 
+             0: jdbc:hive2://localhost:10000> and flight2007_orc.cancelled > 0
+             0: jdbc:hive2://localhost:10000> 
+             0: jdbc:hive2://localhost:10000> group by uniquecarrier, city;
+             Submitting tokens for job: job_1515399199940_0053
+             INFO  : The url to track the job: http://sandbox-hdp.hortonworks.com:8088/proxy/application_1515399199940_0053/
+             INFO  : Starting Job = job_1515399199940_0053, Tracking URL = http://sandbox-hdp.hortonworks.com:8088/proxy/application_1515399199940_0053/
+             
+             0: jdbc:hive2://localhost:10000> select uniquecarrier, sum(city_flights_count) as count, concat_ws(', ', collect_set(city)) as cities
+             0: jdbc:hive2://localhost:10000> 
+             0: jdbc:hive2://localhost:10000> from cancelled_flights
+             0: jdbc:hive2://localhost:10000> 
+             0: jdbc:hive2://localhost:10000> group by uniquecarrier
+             0: jdbc:hive2://localhost:10000> 
+             0: jdbc:hive2://localhost:10000> having count(1) > 1
+             0: jdbc:hive2://localhost:10000> 
+             0: jdbc:hive2://localhost:10000> order by count desc;
+             INFO  : The url to track the job: http://sandbox-hdp.hortonworks.com:8088/proxy/application_1515399199940_0054/
+             INFO  : Starting Job = job_1515399199940_0054, Tracking URL = http://sandbox-hdp.hortonworks.com:8088/proxy/application_1515399199940_0054/
+
+             INFO  : Submitting tokens for job: job_1515399199940_0055
+             INFO  : The url to track the job: http://sandbox-hdp.hortonworks.com:8088/proxy/application_1515399199940_0055/
+             INFO  : Starting Job = job_1515399199940_0055, Tracking URL = http://sandbox-hdp.hortonworks.com:8088/proxy/application_1515399199940_0055/
+             INFO  : Kill Command = /usr/hdp/2.6.3.0-235/hadoop/bin/hadoop job  -kill job_1515399199940_0055

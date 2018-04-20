@@ -1,0 +1,1 @@
+hive -f $1 --hivevar engine=$2

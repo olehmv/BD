@@ -1,0 +1,6 @@
+Usage:
+        1) execute from BD folder command -> sbt m5h1/assembly, this will generate m5h1-assembly-1.jar file
+        2) put files: bids.gz.parquet, motels.gz.parquet, exchange_rates in hdfs location -> /user/<user name>/spark
+        3) from m5h1-assembly-1.jar file location execute command -> sh cluster_submit_sql.sh <user name>, this will run spark job
+
+

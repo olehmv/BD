@@ -1,0 +1,67 @@
+[root@sandbox-hdp /]# sh src/execute.sh src/Count_total_number_of_flights_per_carrier_in_2007.sql mr
+log4j:WARN No such property [maxFileSize] in org.apache.log4j.DailyRollingFileAppender.
+
+Logging initialized using configuration in file:/etc/hive/2.6.3.0-235/0/hive-log4j.properties
+Query ID = root_20180107161831_eb9bbe89-30af-400d-bdf8-b22f8b8bc888
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 3
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1515323323941_0042, Tracking URL = http://sandbox-hdp.hortonworks.com:8088/proxy/application_1515323323941_0042/
+Kill Command = /usr/hdp/2.6.3.0-235/hadoop/bin/hadoop job  -kill job_1515323323941_0042
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 3
+2018-01-07 16:18:42,129 Stage-1 map = 0%,  reduce = 0%
+2018-01-07 16:18:48,634 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 6.13 sec
+2018-01-07 16:18:54,926 Stage-1 map = 100%,  reduce = 33%, Cumulative CPU 8.7 sec
+2018-01-07 16:18:59,160 Stage-1 map = 100%,  reduce = 67%, Cumulative CPU 11.34 sec
+2018-01-07 16:19:03,397 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 14.12 sec
+MapReduce Total cumulative CPU time: 14 seconds 120 msec
+Ended Job = job_1515323323941_0042
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1515323323941_0043, Tracking URL = http://sandbox-hdp.hortonworks.com:8088/proxy/application_1515323323941_0043/
+Kill Command = /usr/hdp/2.6.3.0-235/hadoop/bin/hadoop job  -kill job_1515323323941_0043
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2018-01-07 16:19:10,987 Stage-2 map = 0%,  reduce = 0%
+2018-01-07 16:19:17,429 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 2.98 sec
+2018-01-07 16:19:23,767 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 6.03 sec
+MapReduce Total cumulative CPU time: 6 seconds 30 msec
+Ended Job = job_1515323323941_0043
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 3   Cumulative CPU: 14.12 sec   HDFS Read: 2442924 HDFS Write: 766 SUCCESS
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 6.03 sec   HDFS Read: 6356 HDFS Write: 198 SUCCESS
+Total MapReduce CPU Time Spent: 20 seconds 150 msec
+OK
+WN      1168871
+AA      633857
+OO      597882
+MQ      540494
+UA      490002
+US      485447
+DL      475889
+XE      434773
+NW      414526
+CO      323151
+YV      294362
+EV      286234
+FL      263159
+9E      258851
+OH      233787
+B6      191450
+AS      160185
+F9      97760
+HA      56175
+AQ      46360
+Time taken: 53.774 seconds, Fetched: 20 row(s)
+[root@sandbox-hdp /]# 

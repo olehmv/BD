@@ -1,0 +1,83 @@
+[root@sandbox-hdp /]# sh src/execute.sh src/table_init.sql tez
+log4j:WARN No such property [maxFileSize] in org.apache.log4j.DailyRollingFileAppender.
+
+Logging initialized using configuration in file:/etc/hive/2.6.3.0-235/0/hive-log4j.properties
+OK
+Time taken: 1.841 seconds
+OK
+Time taken: 0.239 seconds
+OK
+Time taken: 0.449 seconds
+Loading data to table m2h1.carriers
+Table m2h1.carriers stats: [numFiles=1, numRows=0, totalSize=43758, rawDataSize=0]
+OK
+Time taken: 0.808 seconds
+OK
+Time taken: 0.219 seconds
+Loading data to table m2h1.airports
+Table m2h1.airports stats: [numFiles=1, numRows=0, totalSize=244438, rawDataSize=0]
+OK
+Time taken: 0.802 seconds
+OK
+Time taken: 0.331 seconds
+Loading data to table m2h1.flight2007
+Table m2h1.flight2007 stats: [numFiles=1, numRows=0, totalSize=702878193, rawDataSize=0]
+OK
+Time taken: 3.044 seconds
+OK
+Time taken: 0.279 seconds
+Query ID = root_20180107145602_e2478eaa-8b3d-46fd-8cf6-3bb73de3eb60
+Total jobs = 1
+Launching Job 1 out of 1
+Status: Running (Executing on YARN cluster with App id application_1515323323941_0026)
+
+--------------------------------------------------------------------------------
+        VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+--------------------------------------------------------------------------------
+Map 1 ..........   SUCCEEDED      1          1        0        0       0       0
+--------------------------------------------------------------------------------
+VERTICES: 01/01  [==========================>>] 100%  ELAPSED TIME: 4.19 s     
+--------------------------------------------------------------------------------
+Loading data to table m2h1.carriers_orc
+Table m2h1.carriers_orc stats: [numFiles=1, numRows=1491, totalSize=16229, rawDataSize=281799]
+OK
+Time taken: 7.106 seconds
+OK
+Time taken: 0.285 seconds
+Query ID = root_20180107145609_6c79cc15-aded-4762-affe-a6227f78e7fe
+Total jobs = 1
+Launching Job 1 out of 1
+Status: Running (Executing on YARN cluster with App id application_1515323323941_0026)
+
+--------------------------------------------------------------------------------
+        VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+--------------------------------------------------------------------------------
+Map 1 ..........   SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ......   SUCCEEDED     52         52        0        0       0       0
+--------------------------------------------------------------------------------
+VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 11.11 s    
+--------------------------------------------------------------------------------
+Loading data to table m2h1.airports_orc
+Table m2h1.airports_orc stats: [numFiles=32, numRows=3376, totalSize=113186, rawDataSize=1552487]
+OK
+Time taken: 12.89 seconds
+OK
+Time taken: 0.701 seconds
+Query ID = root_20180107145623_f73eabfe-1d74-4f7b-abb4-34b29ab3594d
+Total jobs = 1
+Launching Job 1 out of 1
+Status: Running (Executing on YARN cluster with App id application_1515323323941_0026)
+
+--------------------------------------------------------------------------------
+        VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+--------------------------------------------------------------------------------
+Map 1 ..........   SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ......   SUCCEEDED     12         12        0        0       0       0
+--------------------------------------------------------------------------------
+VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 144.25 s   
+--------------------------------------------------------------------------------
+Loading data to table m2h1.flight2007_orc
+Table m2h1.flight2007_orc stats: [numFiles=12, numRows=7453215, totalSize=153702319, rawDataSize=3312543883]
+OK
+Time taken: 147.769 seconds
+[root@sandbox-hdp /]#

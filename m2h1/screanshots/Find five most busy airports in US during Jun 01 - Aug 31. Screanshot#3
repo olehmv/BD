@@ -1,0 +1,31 @@
+[root@sandbox-hdp src]# sh execute.sh Find_five_most_busy_airports_in_US_during_Jun01_Aug31.sql tez
+log4j:WARN No such property [maxFileSize] in org.apache.log4j.DailyRollingFileAppender.
+
+Logging initialized using configuration in file:/etc/hive/2.6.3.0-235/0/hive-log4j.properties
+Query ID = root_20180116161140_48349de8-a750-41ce-92ed-8f26f06cb904
+Total jobs = 1
+Launching Job 1 out of 1
+Status: Running (Executing on YARN cluster with App id application_1516113412394_0026)
+
+--------------------------------------------------------------------------------
+        VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+--------------------------------------------------------------------------------
+Map 1 ..........   SUCCEEDED      6          6        0        0       0       0
+Map 6 ..........   SUCCEEDED      1          1        0        0       0       0
+Map 7 ..........   SUCCEEDED      6          6        0        0       0       0
+Map 9 ..........   SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ......   SUCCEEDED      1          1        0        0       0       0
+Reducer 4 ......   SUCCEEDED      1          1        0        0       0       0
+Reducer 5 ......   SUCCEEDED      1          1        0        0       0       0
+Reducer 8 ......   SUCCEEDED      1          1        0        0       0       0
+--------------------------------------------------------------------------------
+VERTICES: 08/08  [==========================>>] 100%  ELAPSED TIME: 17.41 s    
+--------------------------------------------------------------------------------
+OK
+William B Hartsfield-Atlanta Intl       220506
+Chicago O'Hare International    192043
+Dallas-Fort Worth International 152380
+Denver Intl     126196
+Los Angeles International       122914
+Time taken: 23.92 seconds, Fetched: 5 row(s)
+[root@sandbox-hdp src]#

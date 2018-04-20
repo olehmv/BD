@@ -1,0 +1,15 @@
+Usage:
+    Sqoop:
+        1)execute sql table init(create database & tables)
+            sh execute_mysql.sh <host> <user> <table_init.sql>
+            example: sh execute_mysql.sh localhost root table_init.sql
+        2)execute sqoop export
+            sh execute_sqoop.sh <sqoop file with instractions>
+            example: sh execute_sqoop.sh weather_export.sqoop
+        3)check data export
+            sh execute_mysql.sh <host> <user> <query.sql>
+            example: sh execute_mysql.sh localhost root weather_select_data_limit.sql
+   Flume:
+        1)execute: cat linux_messages_3000lines.txt | while read line ; do echo    "$line" ; sleep 0.2 ; done > output.txt 
+        2)execute: sh execute_flume.sh <agent name> <flume server config dir> <flume config file>
+            example: sh execute_flume.sh a1 /usr/hdp/current/flume-server/conf flume_conf.properties            

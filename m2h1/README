@@ -1,0 +1,7 @@
+Usage:
+    1)Put DataSet files(2007.csv, airports.csv, carriers.csv) in src directory.
+    2)Run execute.sh script from src directory:
+        usage - sh execute.sh <sql script file> <execute engine>
+	example:
+        a) sh execute.sh table_init.sql tez
+        b) sh execute.sh ***queries.sql mr

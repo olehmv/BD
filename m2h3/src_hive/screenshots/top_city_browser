@@ -1,0 +1,389 @@
+[root@sandbox-hdp src_hive]# sh execute.sh localhost:10016 top_city_browser.sql 
+Connecting to jdbc:hive2://localhost:10016
+Connected to: Spark SQL (version 2.2.0.2.6.3.0-235)
+Driver: Hive JDBC (version 1.2.1000.2.6.3.0-235)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10016> use m2h3;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.088 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> set hive.tez.java.opts=-Xmx1024m;
++---------------------+------------+--+
+|         key         |   value    |
++---------------------+------------+--+
+| hive.tez.java.opts  | -Xmx1024m  |
++---------------------+------------+--+
+1 row selected (0.014 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> ADD JAR m2h3-assembly-1.jar;
++---------+--+
+| result  |
++---------+--+
+| 0       |
++---------+--+
+1 row selected (0.02 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> CREATE TEMPORARY FUNCTION useragent AS 'module2.homework3.UserAgentUDF';
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.013 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> select d.cityname,c.browser,c.suma 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> from city d,
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select a.cityid, a.browser, a.suma from
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016>  (select i.cityid as cityid, i.browser as browser, sum(i.counter) as suma from 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select imp.cityid as cityid,useragent(imp.useragent).browser as browser, count(*) as counter from impression imp group by imp.cityid,imp.useragent) i  group by cityid, browser order by suma desc) a
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> join 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select i.cityid as cityid, max(i.suma) as max from
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select ii.cityid as cityid, ii.browser as browser, sum(ii.counter) as suma from 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select imp.cityid as cityid,useragent(imp.useragent).browser as browser, count(*) as counter from impression imp group by imp.cityid,imp.useragent) ii  group by cityid, browser order by suma desc)i group by cityid) b
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> where a.suma=b.max and a.cityid=b.cityid) c
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> where d.cityid=c.cityid
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> group by cityname,browser,suma
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> order by suma desc;
++-------------------+--------------------+---------+--+
+|     cityname      |      browser       |  suma   |
++-------------------+--------------------+---------+--+
+| shenzhen          | Internet Explorer  | 149412  |
+| guangzhou         | Internet Explorer  | 117243  |
+| dongguan          | Internet Explorer  | 66885   |
+| unknown           | Internet Explorer  | 64084   |
+| foshan            | Internet Explorer  | 42229   |
+| huizhou           | Internet Explorer  | 24711   |
+| zhongshan         | Internet Explorer  | 22877   |
+| zhuhai            | Safari             | 20658   |
+| chengdu           | Internet Explorer  | 19454   |
+| hangzhou          | Internet Explorer  | 19195   |
+| xian              | Internet Explorer  | 18506   |
+| wuhan             | Internet Explorer  | 17382   |
+| suzhou_jiangsu    | Internet Explorer  | 17028   |
+| jiangmen          | Internet Explorer  | 16375   |
+| shantou           | Internet Explorer  | 16104   |
+| zhengzhou         | Internet Explorer  | 14941   |
+| changsha          | Safari             | 13136   |
+| shijiazhuang      | Internet Explorer  | 12204   |
+| nanjing           | Internet Explorer  | 11814   |
+| zhanjiang         | Internet Explorer  | 11559   |
+| wenzhou           | Internet Explorer  | 11544   |
+| qingdao           | Internet Explorer  | 11505   |
+| nanning           | Internet Explorer  | 11427   |
+| haerbin           | Internet Explorer  | 10497   |
+| jinan             | Internet Explorer  | 10186   |
+| jieyang           | Internet Explorer  | 9668    |
+| meizhou           | Internet Explorer  | 9648    |
+| changchun         | Internet Explorer  | 9408    |
+| shenyang          | Internet Explorer  | 8990    |
+| zhaoqing          | Internet Explorer  | 8947    |
+| fuzhou_124        | Internet Explorer  | 8685    |
+| hefei             | Internet Explorer  | 8586    |
+| ningbo            | Internet Explorer  | 8403    |
+| maoming           | Internet Explorer  | 8393    |
+| jinhua            | Internet Explorer  | 7887    |
+| kunming           | Internet Explorer  | 7699    |
+| qingyuan          | Internet Explorer  | 7665    |
+| dalian            | Internet Explorer  | 7545    |
+| wuxi              | Internet Explorer  | 7411    |
+| baoding           | Internet Explorer  | 7367    |
+| yantai            | Internet Explorer  | 7335    |
+| taiyuan           | Internet Explorer  | 7057    |
+| haikou            | Internet Explorer  | 6976    |
+| quanzhou          | Internet Explorer  | 6951    |
+| taizhou           | Internet Explorer  | 6795    |
+| nanchang          | Internet Explorer  | 6614    |
+| shaoguan          | Internet Explorer  | 6594    |
+| weifang           | Internet Explorer  | 6497    |
+| xuzhou            | Internet Explorer  | 6424    |
+| yangjiang         | Internet Explorer  | 6417    |
+| xiamen            | Internet Explorer  | 6307    |
+| linyi             | Internet Explorer  | 6021    |
+| chaozhou          | Internet Explorer  | 5835    |
+| jiaxing           | Internet Explorer  | 5698    |
+| tangshan          | Internet Explorer  | 5681    |
+| jilin_city        | Internet Explorer  | 5550    |
+| wulumuqi          | Internet Explorer  | 5241    |
+| guiyang           | Internet Explorer  | 5141    |
+| heyuan            | Internet Explorer  | 5107    |
+| xingtai           | Internet Explorer  | 5094    |
+| jining            | Internet Explorer  | 4852    |
+| nantong           | Internet Explorer  | 4827    |
+| shaoxing          | Internet Explorer  | 4764    |
+| changzhou         | Internet Explorer  | 4741    |
+| langfang          | Internet Explorer  | 4673    |
+| luoyang           | Internet Explorer  | 4670    |
+| handan            | Internet Explorer  | 4478    |
+| liuzhou           | Internet Explorer  | 4459    |
+| cangzhou          | Internet Explorer  | 4448    |
+| lanzhou           | Internet Explorer  | 4309    |
+| yangzhou          | Internet Explorer  | 4289    |
+| zibo              | Internet Explorer  | 4000    |
+| xinxiang          | Internet Explorer  | 3879    |
+| guilin            | Internet Explorer  | 3847    |
+| shanwei           | Internet Explorer  | 3731    |
+| zaozhuang         | Internet Explorer  | 3665    |
+| yancheng          | Internet Explorer  | 3648    |
+| daqing            | Internet Explorer  | 3598    |
+| nanyang           | Internet Explorer  | 3569    |
+| putian            | Internet Explorer  | 3511    |
+| ganzhou           | Internet Explorer  | 3497    |
+| yunfu             | Internet Explorer  | 3346    |
+| taian             | Internet Explorer  | 3297    |
+| jiaozuo           | Internet Explorer  | 3294    |
+| huhehaote         | Internet Explorer  | 3280    |
+| heze              | Internet Explorer  | 3221    |
+| anshan            | Internet Explorer  | 3215    |
+| yulin_238         | Internet Explorer  | 3196    |
+| yuncheng          | Internet Explorer  | 3157    |
+| qiqihaer          | Internet Explorer  | 3144    |
+| yichang           | Internet Explorer  | 3109    |
+| xiangfan          | Internet Explorer  | 3106    |
+| zhuzhou           | Internet Explorer  | 3098    |
+| taizhou_jiangsu   | Internet Explorer  | 3079    |
+| hengyang          | Internet Explorer  | 3055    |
+| weihai            | Internet Explorer  | 3048    |
+| mianyang          | Internet Explorer  | 2986    |
+| liaocheng         | Internet Explorer  | 2964    |
+| pingdingshan      | Internet Explorer  | 2943    |
+| wuzhou            | Internet Explorer  | 2880    |
++-------------------+--------------------+---------+--+
+|     cityname      |      browser       |  suma   |
++-------------------+--------------------+---------+--+
+| mudanjiang        | Internet Explorer  | 2876    |
+| jinzhou           | Internet Explorer  | 2837    |
+| dezhou            | Internet Explorer  | 2788    |
+| lianyungang       | Internet Explorer  | 2782    |
+| binzhou           | Internet Explorer  | 2739    |
+| zhenjiang         | Internet Explorer  | 2725    |
+| qinhuangdao       | Internet Explorer  | 2676    |
+| anyang            | Internet Explorer  | 2655    |
+| xiaogan           | Internet Explorer  | 2626    |
+| leshan            | Internet Explorer  | 2611    |
+| shangqiu          | Internet Explorer  | 2607    |
+| dongying          | Internet Explorer  | 2588    |
+| yinchuan          | Internet Explorer  | 2564    |
+| xuchang           | Internet Explorer  | 2542    |
+| chenzhou          | Internet Explorer  | 2532    |
+| rizhao            | Internet Explorer  | 2488    |
+| huanggang         | Internet Explorer  | 2481    |
+| hengshui          | Internet Explorer  | 2445    |
+| xinyang           | Internet Explorer  | 2439    |
+| linfen            | Internet Explorer  | 2425    |
+| huaian            | Internet Explorer  | 2420    |
+| xianyang          | Internet Explorer  | 2416    |
+| weinan            | Internet Explorer  | 2414    |
+| yueyang           | Internet Explorer  | 2408    |
+| jingzhou          | Internet Explorer  | 2408    |
+| yanbian           | Internet Explorer  | 2402    |
+| baoji             | Internet Explorer  | 2386    |
+| zhoukou           | Internet Explorer  | 2375    |
+| siping            | Internet Explorer  | 2310    |
+| shiyan            | Internet Explorer  | 2278    |
+| datong            | Internet Explorer  | 2277    |
+| jinzhongshi       | Internet Explorer  | 2275    |
+| huzhou            | Internet Explorer  | 2270    |
+| nanchong          | Internet Explorer  | 2257    |
+| chifeng           | Internet Explorer  | 2235    |
+| shaoyang          | Internet Explorer  | 2203    |
+| jingmen           | Internet Explorer  | 2200    |
+| suihua            | Internet Explorer  | 2188    |
+| deyang            | Internet Explorer  | 2182    |
+| yingkou           | Internet Explorer  | 2163    |
+| xiangtan          | Internet Explorer  | 2148    |
+| changde           | Internet Explorer  | 2133    |
+| fushun            | Internet Explorer  | 2110    |
+| lvliang           | Internet Explorer  | 2107    |
+| yichun_134        | Internet Explorer  | 2074    |
+| jiamusi           | Internet Explorer  | 2071    |
+| suqian            | Internet Explorer  | 2070    |
+| zhangzhou         | Internet Explorer  | 2060    |
+| hanzhong          | Internet Explorer  | 2057    |
+| huainan           | Internet Explorer  | 2020    |
+| dandong           | Internet Explorer  | 2011    |
+| baotou            | Internet Explorer  | 2007    |
+| wuhu              | Internet Explorer  | 1976    |
+| zhangjiakou       | Internet Explorer  | 1952    |
+| jiujiang          | Internet Explorer  | 1948    |
+| yulin_333         | Internet Explorer  | 1929    |
+| huaihua           | Internet Explorer  | 1922    |
+| kaifeng           | Internet Explorer  | 1911    |
+| huangshi          | Internet Explorer  | 1881    |
+| sanmenxia         | Internet Explorer  | 1873    |
+| xianning          | Internet Explorer  | 1865    |
+| benxi             | Internet Explorer  | 1859    |
+| huludao           | Internet Explorer  | 1851    |
+| anqing            | Internet Explorer  | 1838    |
+| fuxin             | Internet Explorer  | 1836    |
+| yibin             | Internet Explorer  | 1826    |
+| shangrao          | Internet Explorer  | 1814    |
+| yiyang            | Internet Explorer  | 1796    |
+| lishui            | Internet Explorer  | 1789    |
+| bangbu            | Internet Explorer  | 1773    |
+| yongzhou          | Internet Explorer  | 1770    |
+| hulunbeier        | Internet Explorer  | 1765    |
+| zunyi             | Internet Explorer  | 1764    |
+| tongliao          | Internet Explorer  | 1760    |
+| quzhou            | Internet Explorer  | 1754    |
+| changzhi          | Internet Explorer  | 1752    |
+| xining            | Internet Explorer  | 1746    |
+| guigang           | Internet Explorer  | 1721    |
+| loudi             | Internet Explorer  | 1714    |
+| liuan             | Internet Explorer  | 1711    |
+| tieling           | Internet Explorer  | 1669    |
+| jian              | Internet Explorer  | 1667    |
+| suzhou            | Internet Explorer  | 1662    |
+| yangquan          | Internet Explorer  | 1660    |
+| chaoyang          | Internet Explorer  | 1658    |
+| baise             | Internet Explorer  | 1652    |
+| panjin            | Internet Explorer  | 1649    |
+| dazhou            | Internet Explorer  | 1646    |
+| chengde           | Internet Explorer  | 1629    |
+| zhumadian         | Internet Explorer  | 1623    |
+| luzhou            | Internet Explorer  | 1623    |
+| luohe             | Internet Explorer  | 1607    |
+| liaoyang          | Internet Explorer  | 1556    |
+| qinzhou           | Internet Explorer  | 1551    |
+| tonghua           | Internet Explorer  | 1505    |
+| jincheng          | Internet Explorer  | 1496    |
+| yili              | Internet Explorer  | 1493    |
+| songyuan          | Internet Explorer  | 1492    |
+| xinzhou           | Internet Explorer  | 1476    |
+| xuancheng         | Internet Explorer  | 1476    |
++-------------------+--------------------+---------+--+
+|     cityname      |      browser       |  suma   |
++-------------------+--------------------+---------+--+
+| puyang            | Internet Explorer  | 1452    |
+| longyan           | Internet Explorer  | 1420    |
+| eerduosi          | Internet Explorer  | 1406    |
+| maanshan          | Internet Explorer  | 1405    |
+| shuangyashan      | Internet Explorer  | 1398    |
+| honghe            | Internet Explorer  | 1383    |
+| hechi             | Internet Explorer  | 1369    |
+| xiangxi           | Internet Explorer  | 1359    |
+| jixi              | Internet Explorer  | 1352    |
+| chaohu            | Internet Explorer  | 1339    |
+| fuzhou_134        | Internet Explorer  | 1323    |
+| beihai            | Internet Explorer  | 1300    |
+| ningde            | Internet Explorer  | 1296    |
+| suining           | Internet Explorer  | 1279    |
+| qujing            | Internet Explorer  | 1278    |
+| zigong            | Internet Explorer  | 1264    |
+| enshishi          | Internet Explorer  | 1255    |
+| baicheng          | Internet Explorer  | 1246    |
+| sanming           | Internet Explorer  | 1214    |
+| neijiang          | Internet Explorer  | 1210    |
+| suizhou           | Internet Explorer  | 1205    |
+| qiandongnan       | Internet Explorer  | 1174    |
+| bozhou            | Internet Explorer  | 1170    |
+| baishan           | Internet Explorer  | 1169    |
+| tongren           | Internet Explorer  | 1166    |
+| meishan           | Internet Explorer  | 1157    |
+| bayinguoleng      | Internet Explorer  | 1154    |
+| ezhou             | Internet Explorer  | 1152    |
+| nanping           | Internet Explorer  | 1148    |
+| huaibei           | Internet Explorer  | 1134    |
+| hebi              | Internet Explorer  | 1125    |
+| fuyang            | Internet Explorer  | 1117    |
+| ziyang            | Internet Explorer  | 1103    |
+| pingxiang         | Internet Explorer  | 1093    |
+| liangshan         | Internet Explorer  | 1089    |
+| guangyuan         | Internet Explorer  | 1089    |
+| changji           | Internet Explorer  | 1075    |
+| heihe             | Internet Explorer  | 1075    |
+| yuxi              | Internet Explorer  | 1066    |
+| laiwu             | Internet Explorer  | 1050    |
+| yichun_65         | Internet Explorer  | 1049    |
+| ankang            | Internet Explorer  | 1043    |
+| shangluo          | Internet Explorer  | 1029    |
+| jingdezhen        | Internet Explorer  | 1007    |
+| panzhihua         | Internet Explorer  | 998     |
+| qianxinan         | Internet Explorer  | 991     |
+| huangshan         | Internet Explorer  | 949     |
+| zhoushan          | Internet Explorer  | 938     |
+| laibin            | Internet Explorer  | 936     |
+| guangan           | Internet Explorer  | 926     |
+| dali              | Internet Explorer  | 925     |
+| fangchenggang     | Internet Explorer  | 920     |
+| bijie             | Internet Explorer  | 920     |
+| yanan             | Internet Explorer  | 918     |
+| akesu             | Internet Explorer  | 906     |
+| xinyu             | Internet Explorer  | 906     |
+| qiannan           | Internet Explorer  | 902     |
+| tongling          | Internet Explorer  | 900     |
+| hegang            | Internet Explorer  | 892     |
+| bayannaoer        | Internet Explorer  | 883     |
+| kashi             | Internet Explorer  | 881     |
+| chuzhou           | Internet Explorer  | 872     |
+| xingan            | Internet Explorer  | 802     |
+| zhaotong          | Internet Explorer  | 783     |
+| hezhou            | Internet Explorer  | 774     |
+| yaan              | Internet Explorer  | 754     |
+| qitaihe           | Internet Explorer  | 735     |
+| liupanshui        | Internet Explorer  | 731     |
+| wenshan           | Internet Explorer  | 715     |
+| chizhou           | Internet Explorer  | 706     |
+| shuozhou          | Internet Explorer  | 704     |
+| liaoyuan          | Internet Explorer  | 703     |
+| bazhong           | Internet Explorer  | 697     |
+| jiuquan           | Internet Explorer  | 694     |
+| zhangjiajie       | Internet Explorer  | 685     |
+| baiyin            | Internet Explorer  | 668     |
+| chuxiong          | Internet Explorer  | 667     |
+| qingyang          | Internet Explorer  | 660     |
+| wulanchabu        | Internet Explorer  | 655     |
+| kelamayi          | Internet Explorer  | 655     |
+| pingliang         | Internet Explorer  | 649     |
+| xilinguole        | Internet Explorer  | 638     |
+| shizuishan        | Internet Explorer  | 634     |
+| tianshui          | Internet Explorer  | 633     |
+| xishuangbanna     | Internet Explorer  | 630     |
+| wuhai             | Internet Explorer  | 566     |
+| tacheng           | Internet Explorer  | 546     |
+| wuwei             | Internet Explorer  | 539     |
+| puer              | Internet Explorer  | 537     |
+| hami              | Internet Explorer  | 503     |
+| anshun            | Internet Explorer  | 501     |
+| yingtan           | Internet Explorer  | 491     |
+| tongzhou          | Internet Explorer  | 473     |
+| wuzhong           | Internet Explorer  | 459     |
+| zhangye           | Internet Explorer  | 450     |
+| longnan           | Internet Explorer  | 442     |
+| lincang           | Internet Explorer  | 407     |
+| lijiang           | Internet Explorer  | 397     |
+| baoshan           | Internet Explorer  | 397     |
+| daxinganling      | Internet Explorer  | 392     |
++-------------------+--------------------+---------+--+
+|     cityname      |      browser       |  suma   |
+[root@sandbox-hdp src_hive]# sh execute.sh localhost:10016 top_city_browser.sql 
+Connecting to jdbc:hive2://localhost:10016
+Connected to: Spark SQL (version 2.2.0.2.6.3.0-235)
+Driver: Hive JDBC (version 1.2.1000.2.6.3.0-235)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10016> use m2h3;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.108 seconds)
+0: jdbc:hive2://localhost:10016> 

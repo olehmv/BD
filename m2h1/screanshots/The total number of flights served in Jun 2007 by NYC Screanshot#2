@@ -1,0 +1,37 @@
+[root@sandbox-hdp /]# sh src/execute.sh src/The_total_number_of_flights_served_in_Jun_2007_by_NYC.sql mr
+log4j:WARN No such property [maxFileSize] in org.apache.log4j.DailyRollingFileAppender.
+
+Logging initialized using configuration in file:/etc/hive/2.6.3.0-235/0/hive-log4j.properties
+Warning: Map Join MAPJOIN[17][bigTable=?] in task 'Stage-2:MAPRED' is a cross product
+Query ID = root_20180107162451_273423f3-cc06-4231-b55d-e6558a410435
+Total jobs = 1
+Execution log at: /tmp/root/root_20180107162451_273423f3-cc06-4231-b55d-e6558a410435.log
+2018-01-07 16:24:58     Starting to launch local task to process map join;      maximum memory = 1046478848
+2018-01-07 16:24:59     Dump the side-table for tag: 1 with group count: 1 into file: file:/tmp/root/ef5b8ed1-5677-4cc9-a138-721794e2e07f/hive_2018-01-07_16-24-51_796_1465514653430283094-1/-local-10004/HashTable-Stage-2/MapJoin-mapfile01--.hashtable
+2018-01-07 16:24:59     Uploaded 1 File to: file:/tmp/root/ef5b8ed1-5677-4cc9-a138-721794e2e07f/hive_2018-01-07_16-24-51_796_1465514653430283094-1/-local-10004/HashTable-Stage-2/MapJoin-mapfile01--.hashtable (326 bytes)
+2018-01-07 16:24:59     End of local task; Time Taken: 1.676 sec.
+Execution completed successfully
+MapredLocal task succeeded
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1515323323941_0044, Tracking URL = http://sandbox-hdp.hortonworks.com:8088/proxy/application_1515323323941_0044/
+Kill Command = /usr/hdp/2.6.3.0-235/hadoop/bin/hadoop job  -kill job_1515323323941_0044
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2018-01-07 16:25:08,600 Stage-2 map = 0%,  reduce = 0%
+2018-01-07 16:25:17,180 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 10.38 sec
+2018-01-07 16:25:24,747 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 13.99 sec
+MapReduce Total cumulative CPU time: 13 seconds 990 msec
+Ended Job = job_1515323323941_0044
+MapReduce Jobs Launched: 
+Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 13.99 sec   HDFS Read: 1378846 HDFS Write: 6 SUCCESS
+Total MapReduce CPU Time Spent: 13 seconds 990 msec
+OK
+41280
+Time taken: 34.099 seconds, Fetched: 1 row(s)
+[root@sandbox-hdp /]#

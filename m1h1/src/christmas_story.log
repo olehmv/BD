@@ -1,0 +1,72 @@
+D:\BD\m1h1\target\scala-2.11>yarn jar m1h1_2.11-1.jar /users/christmas_story /users/result
+17/12/29 14:55:36 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+17/12/29 14:55:36 WARN mapreduce.JobSubmitter: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+17/12/29 14:55:36 INFO input.FileInputFormat: Total input paths to process : 1
+17/12/29 14:55:37 INFO mapreduce.JobSubmitter: number of splits:1
+17/12/29 14:55:37 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1514550074175_0003
+17/12/29 14:55:37 INFO impl.YarnClientImpl: Submitted application application_1514550074175_0003
+17/12/29 14:55:37 INFO mapreduce.Job: The url to track the job: http://EPUALVIW0332:8088/proxy/application_1514550074175_0003/
+17/12/29 14:55:37 INFO mapreduce.Job: Running job: job_1514550074175_0003
+17/12/29 14:55:43 INFO mapreduce.Job: Job job_1514550074175_0003 running in uber mode : false
+17/12/29 14:55:43 INFO mapreduce.Job:  map 0% reduce 0%
+17/12/29 14:55:48 INFO mapreduce.Job:  map 100% reduce 0%
+17/12/29 14:55:54 INFO mapreduce.Job:  map 100% reduce 100%
+17/12/29 14:55:54 INFO mapreduce.Job: Job job_1514550074175_0003 completed successfully
+17/12/29 14:55:54 INFO mapreduce.Job: Counters: 49
+        File System Counters
+                FILE: Number of bytes read=2988
+                FILE: Number of bytes written=220919
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=3031
+                HDFS: Number of bytes written=2925
+                HDFS: Number of read operations=6
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+        Job Counters
+                Launched map tasks=1
+                Launched reduce tasks=1
+                Rack-local map tasks=1
+                Total time spent by all maps in occupied slots (ms)=2424
+                Total time spent by all reduces in occupied slots (ms)=2767
+                Total time spent by all map tasks (ms)=2424
+                Total time spent by all reduce tasks (ms)=2767
+                Total vcore-seconds taken by all map tasks=2424
+                Total vcore-seconds taken by all reduce tasks=2767
+                Total megabyte-seconds taken by all map tasks=2482176
+                Total megabyte-seconds taken by all reduce tasks=2833408
+        Map-Reduce Framework
+                Map input records=5
+                Map output records=546
+                Map output bytes=5053
+                Map output materialized bytes=2988
+                Input split bytes=109
+                Combine input records=546
+                Combine output records=13
+                Reduce input groups=13
+                Reduce shuffle bytes=2988
+                Reduce input records=13
+                Reduce output records=13
+                Spilled Records=26
+                Shuffled Maps =1
+                Failed Shuffles=0
+                Merged Map outputs=1
+                GC time elapsed (ms)=73
+                CPU time spent (ms)=1246
+                Physical memory (bytes) snapshot=460017664
+                Virtual memory (bytes) snapshot=570445824
+                Total committed heap usage (bytes)=348127232
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=2922
+        File Output Format Counters
+                Bytes Written=2925
+
+D:\BD\m1h1\target\scala-2.11>

@@ -1,0 +1,417 @@
+[root@sandbox-hdp src_hive]# sh execute.sh localhost:10016 top_city_osname.sql 
+Connecting to jdbc:hive2://localhost:10016
+Connected to: Spark SQL (version 2.2.0.2.6.3.0-235)
+Driver: Hive JDBC (version 1.2.1000.2.6.3.0-235)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10016> use m2h3;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.08 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> set hive.tez.java.opts=-Xmx1024m;
++---------------------+------------+--+
+|         key         |   value    |
++---------------------+------------+--+
+| hive.tez.java.opts  | -Xmx1024m  |
++---------------------+------------+--+
+1 row selected (0.012 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> ADD JAR m2h3-assembly-1.jar;
++---------+--+
+| result  |
++---------+--+
+| 0       |
++---------+--+
+1 row selected (0.016 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> CREATE TEMPORARY FUNCTION useragent AS 'module2.homework3.UserAgentUDF';
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.01 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> select d.cityname,c.osname,c.suma 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> from city d,
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select a.cityid, a.osname, a.suma from
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016>  (select i.cityid as cityid, i.osname as osname, sum(i.counter) as suma from 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select imp.cityid as cityid,useragent(imp.useragent).osname as osname, count(*) as counter from impression imp group by imp.cityid,imp.useragent) i  group by cityid, osname order by suma desc) a
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> join 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select i.cityid as cityid, max(i.suma) as max from
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select ii.cityid as cityid, ii.osname as osname, sum(ii.counter) as suma from 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select imp.cityid as cityid,useragent(imp.useragent).osname as osname, count(*) as counter from impression imp group by imp.cityid,imp.useragent) ii  group by cityid, osname order by suma desc)i group by cityid) b
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> where a.suma=b.max and a.cityid=b.cityid) c
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> where d.cityid=c.cityid
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> group by cityname,osname,suma
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> order by suma desc;
++-------------------+-------------+---------+--+
+|     cityname      |   osname    |  suma   |
++-------------------+-------------+---------+--+
+| shenzhen          | Windows XP  | 165802  |
+| guangzhou         | Windows XP  | 130031  |
+| dongguan          | Windows XP  | 82156   |
+| foshan            | Windows XP  | 53764   |
+| unknown           | Windows XP  | 51824   |
+| huizhou           | Windows XP  | 31213   |
+| zhongshan         | Windows XP  | 28819   |
+| shantou           | Windows XP  | 21893   |
+| jiangmen          | Windows XP  | 21584   |
+| hangzhou          | Windows XP  | 21514   |
+| xian              | Windows XP  | 21144   |
+| chengdu           | Windows XP  | 20253   |
+| wuhan             | Windows XP  | 19216   |
+| suzhou_jiangsu    | Windows XP  | 17925   |
+| zhuhai            | Windows XP  | 17729   |
+| zhengzhou         | Windows XP  | 17006   |
+| shijiazhuang      | Windows XP  | 14760   |
+| zhanjiang         | Windows XP  | 14699   |
+| qingdao           | Windows XP  | 13527   |
+| changsha          | Windows XP  | 13254   |
+| jieyang           | Windows XP  | 13078   |
+| wenzhou           | Windows XP  | 13071   |
+| nanning           | Windows XP  | 12876   |
+| nanjing           | Windows XP  | 11998   |
+| haerbin           | Windows XP  | 11760   |
+| meizhou           | Windows XP  | 11506   |
+| zhaoqing          | Windows XP  | 11242   |
+| jinan             | Windows XP  | 11157   |
+| changchun         | Windows XP  | 10840   |
+| shenyang          | Windows XP  | 10825   |
+| maoming           | Windows XP  | 10313   |
+| qingyuan          | Windows XP  | 10114   |
+| fuzhou_124        | Windows XP  | 10030   |
+| ningbo            | Windows XP  | 9975    |
+| hefei             | Windows XP  | 9466    |
+| baoding           | Windows XP  | 9254    |
+| jinhua            | Windows XP  | 9034    |
+| dalian            | Windows XP  | 8661    |
+| quanzhou          | Windows XP  | 8659    |
+| yantai            | Windows XP  | 8655    |
+| haikou            | Windows XP  | 8575    |
+| shaoguan          | Windows XP  | 8482    |
+| weifang           | Windows XP  | 8418    |
+| wuxi              | Windows XP  | 8293    |
+| taiyuan           | Windows XP  | 8227    |
+| yangjiang         | Windows XP  | 8106    |
+| kunming           | Windows XP  | 8055    |
+| taizhou           | Windows XP  | 7999    |
+| xuzhou            | Windows XP  | 7520    |
+| nanchang          | Windows XP  | 7456    |
+| chaozhou          | Windows XP  | 7451    |
+| xiamen            | Windows XP  | 7335    |
+| tangshan          | Windows XP  | 7282    |
+| linyi             | Windows XP  | 7223    |
+| jilin_city        | Windows XP  | 6934    |
+| heyuan            | Windows XP  | 6725    |
+| jiaxing           | Windows XP  | 6453    |
+| luoyang           | Windows XP  | 6273    |
+| xingtai           | Windows XP  | 6031    |
+| wulumuqi          | Windows XP  | 6005    |
+| handan            | Windows XP  | 5838    |
+| shaoxing          | Windows XP  | 5743    |
+| guiyang           | Windows XP  | 5705    |
+| jining            | Windows XP  | 5663    |
+| langfang          | Windows XP  | 5611    |
+| changzhou         | Windows XP  | 5350    |
+| zibo              | Windows XP  | 5207    |
+| cangzhou          | Windows XP  | 5198    |
+| shanwei           | Windows XP  | 5174    |
+| liuzhou           | Windows XP  | 5114    |
+| nantong           | Windows XP  | 5041    |
+| yangzhou          | Windows XP  | 4804    |
+| xinxiang          | Windows XP  | 4758    |
+| lanzhou           | Windows XP  | 4736    |
+| yunfu             | Windows XP  | 4351    |
+| guilin            | Windows XP  | 4332    |
+| nanyang           | Windows XP  | 4323    |
+| yancheng          | Windows XP  | 4300    |
+| daqing            | Windows XP  | 4265    |
+| ganzhou           | Windows XP  | 4247    |
+| taian             | Windows XP  | 4207    |
+| jiaozuo           | Windows XP  | 4158    |
+| anshan            | Windows XP  | 4146    |
+| zaozhuang         | Windows XP  | 3872    |
+| qiqihaer          | Windows XP  | 3843    |
+| heze              | Windows XP  | 3843    |
+| xiangfan          | Windows XP  | 3831    |
+| yuncheng          | Windows XP  | 3789    |
+| weihai            | Windows XP  | 3714    |
+| zhuzhou           | Windows XP  | 3701    |
+| liaocheng         | Windows XP  | 3654    |
+| pingdingshan      | Windows XP  | 3645    |
+| huhehaote         | Windows XP  | 3632    |
+| putian            | Windows XP  | 3619    |
+| yichang           | Windows XP  | 3608    |
+| jinzhou           | Windows XP  | 3596    |
+| dezhou            | Windows XP  | 3594    |
+| yulin_238         | Windows XP  | 3590    |
+| mudanjiang        | Windows XP  | 3584    |
+| anyang            | Windows XP  | 3489    |
++-------------------+-------------+---------+--+
+|     cityname      |   osname    |  suma   |
++-------------------+-------------+---------+--+
+| mianyang          | Windows XP  | 3468    |
+| hengyang          | Windows XP  | 3459    |
+| binzhou           | Windows XP  | 3372    |
+| lianyungang       | Windows XP  | 3353    |
+| taizhou_jiangsu   | Windows XP  | 3352    |
+| qinhuangdao       | Windows XP  | 3308    |
+| wuzhou            | Windows XP  | 3219    |
+| xuchang           | Windows XP  | 3214    |
+| shangqiu          | Windows XP  | 3176    |
+| dongying          | Windows XP  | 3138    |
+| leshan            | Windows XP  | 3121    |
+| zhenjiang         | Windows XP  | 3089    |
+| linfen            | Windows XP  | 3066    |
+| xiaogan           | Windows XP  | 3060    |
+| hengshui          | Windows XP  | 3035    |
+| yinchuan          | Windows XP  | 2988    |
+| yueyang           | Windows XP  | 2972    |
+| yanbian           | Windows XP  | 2948    |
+| siping            | Windows XP  | 2933    |
+| xinyang           | Windows XP  | 2926    |
+| datong            | Windows XP  | 2926    |
+| jingzhou          | Windows XP  | 2920    |
+| weinan            | Windows XP  | 2900    |
+| xianyang          | Windows XP  | 2888    |
+| huaian            | Windows XP  | 2878    |
+| zhoukou           | Windows XP  | 2870    |
+| huanggang         | Windows XP  | 2852    |
+| rizhao            | Windows XP  | 2830    |
+| chenzhou          | Windows XP  | 2798    |
+| fushun            | Windows XP  | 2789    |
+| yingkou           | Windows XP  | 2761    |
+| baoji             | Windows XP  | 2755    |
+| huzhou            | Windows XP  | 2726    |
+| jinzhongshi       | Windows XP  | 2692    |
+| chifeng           | Windows XP  | 2677    |
+| dandong           | Windows XP  | 2664    |
+| zhangzhou         | Windows XP  | 2638    |
+| suihua            | Windows XP  | 2637    |
+| suqian            | Windows XP  | 2637    |
+| jiamusi           | Windows XP  | 2633    |
+| zhangjiakou       | Windows XP  | 2568    |
+| changde           | Windows XP  | 2558    |
+| nanchong          | Windows XP  | 2557    |
+| baotou            | Windows XP  | 2552    |
+| deyang            | Windows XP  | 2549    |
+| jingmen           | Windows XP  | 2538    |
+| shaoyang          | Windows XP  | 2527    |
+| lvliang           | Windows XP  | 2513    |
+| benxi             | Windows XP  | 2509    |
+| yichun_134        | Windows XP  | 2484    |
+| shiyan            | Windows XP  | 2463    |
+| xiangtan          | Windows XP  | 2459    |
+| huainan           | Windows XP  | 2426    |
+| huludao           | Windows XP  | 2420    |
+| kaifeng           | Windows XP  | 2403    |
+| fuxin             | Windows XP  | 2379    |
+| sanmenxia         | Windows XP  | 2322    |
+| shangrao          | Windows XP  | 2312    |
+| jiujiang          | Windows XP  | 2285    |
+| wuhu              | Windows XP  | 2282    |
+| lishui            | Windows XP  | 2267    |
+| huaihua           | Windows XP  | 2257    |
+| tongliao          | Windows XP  | 2253    |
+| hanzhong          | Windows XP  | 2241    |
+| tieling           | Windows XP  | 2226    |
+| bangbu            | Windows XP  | 2218    |
+| huangshi          | Windows XP  | 2211    |
+| hulunbeier        | Windows XP  | 2190    |
+| yulin_333         | Windows XP  | 2177    |
+| xianning          | Windows XP  | 2176    |
+| chaoyang          | Windows XP  | 2168    |
+| zunyi             | Windows XP  | 2165    |
+| liuan             | Windows XP  | 2159    |
+| yiyang            | Windows XP  | 2153    |
+| quzhou            | Windows XP  | 2138    |
+| guigang           | Windows XP  | 2119    |
+| panjin            | Windows XP  | 2092    |
+| liaoyang          | Windows XP  | 2087    |
+| changzhi          | Windows XP  | 2073    |
+| yongzhou          | Windows XP  | 2060    |
+| suzhou            | Windows XP  | 2027    |
+| yibin             | Windows XP  | 2024    |
+| jian              | Windows XP  | 2022    |
+| xining            | Windows XP  | 2013    |
+| tonghua           | Windows XP  | 2004    |
+| chengde           | Windows XP  | 1978    |
+| loudi             | Windows XP  | 1975    |
+| anqing            | Windows XP  | 1972    |
+| zhumadian         | Windows XP  | 1972    |
+| yangquan          | Windows XP  | 1969    |
+| baise             | Windows XP  | 1954    |
+| songyuan          | Windows XP  | 1919    |
+| dazhou            | Windows XP  | 1891    |
+| luohe             | Windows XP  | 1883    |
+| luzhou            | Windows XP  | 1845    |
+| puyang            | Windows XP  | 1805    |
+| qinzhou           | Windows XP  | 1800    |
+| longyan           | Windows XP  | 1799    |
+| yili              | Windows XP  | 1790    |
+| xinzhou           | Windows XP  | 1783    |
++-------------------+-------------+---------+--+
+|     cityname      |   osname    |  suma   |
++-------------------+-------------+---------+--+
+| xuancheng         | Windows XP  | 1775    |
+| maanshan          | Windows XP  | 1716    |
+| jixi              | Windows XP  | 1708    |
+| honghe            | Windows XP  | 1707    |
+| shuangyashan      | Windows XP  | 1699    |
+| jincheng          | Windows XP  | 1689    |
+| sanming           | Windows XP  | 1684    |
+| hechi             | Windows XP  | 1677    |
+| fuzhou_134        | Windows XP  | 1649    |
+| ningde            | Windows XP  | 1646    |
+| eerduosi          | Windows XP  | 1628    |
+| zigong            | Windows XP  | 1568    |
+| baicheng          | Windows XP  | 1548    |
+| bozhou            | Windows XP  | 1542    |
+| chaohu            | Windows XP  | 1526    |
+| baishan           | Windows XP  | 1515    |
+| beihai            | Windows XP  | 1512    |
+| xiangxi           | Windows XP  | 1502    |
+| ezhou             | Windows XP  | 1481    |
+| hebi              | Windows XP  | 1456    |
+| huaibei           | Windows XP  | 1449    |
+| enshishi          | Windows XP  | 1447    |
+| neijiang          | Windows XP  | 1447    |
+| nanping           | Windows XP  | 1443    |
+| suizhou           | Windows XP  | 1417    |
+| tongren           | Windows XP  | 1375    |
+| heihe             | Windows XP  | 1375    |
+| qujing            | Windows XP  | 1363    |
+| suining           | Windows XP  | 1360    |
+| qiandongnan       | Windows XP  | 1353    |
+| meishan           | Windows XP  | 1352    |
+| laiwu             | Windows XP  | 1347    |
+| ziyang            | Windows XP  | 1341    |
+| liangshan         | Windows XP  | 1336    |
+| yichun_65         | Windows XP  | 1334    |
+| bayinguoleng      | Windows XP  | 1323    |
+| fuyang            | Windows XP  | 1311    |
+| guangyuan         | Windows XP  | 1281    |
+| changji           | Windows XP  | 1279    |
+| panzhihua         | Windows XP  | 1273    |
+| pingxiang         | Windows XP  | 1263    |
+| jingdezhen        | Windows XP  | 1256    |
+| ankang            | Windows XP  | 1236    |
+| shangluo          | Windows XP  | 1172    |
+| hegang            | Windows XP  | 1168    |
+| yuxi              | Windows XP  | 1168    |
+| qiannan           | Windows XP  | 1151    |
+| zhoushan          | Windows XP  | 1148    |
+| huangshan         | Windows XP  | 1127    |
+| bayannaoer        | Windows XP  | 1107    |
+| laibin            | Windows XP  | 1105    |
+| bijie             | Windows XP  | 1088    |
+| qianxinan         | Windows XP  | 1084    |
+| xinyu             | Windows XP  | 1084    |
+| yanan             | Windows XP  | 1072    |
+| guangan           | Windows XP  | 1070    |
+| tongling          | Windows XP  | 1065    |
+| xingan            | Windows XP  | 1029    |
+| akesu             | Windows XP  | 1028    |
+| fangchenggang     | Windows XP  | 983     |
+| chuzhou           | Windows XP  | 966     |
+| qitaihe           | Windows XP  | 941     |
+| dali              | Windows XP  | 937     |
+| kashi             | Windows XP  | 926     |
+| liaoyuan          | Windows XP  | 923     |
+| chizhou           | Windows XP  | 896     |
+| liupanshui        | Windows XP  | 892     |
+| zhaotong          | Windows XP  | 844     |
+| wulanchabu        | Windows XP  | 829     |
+| shuozhou          | Windows XP  | 828     |
+| yaan              | Windows XP  | 819     |
+| wenshan           | Windows XP  | 817     |
+| hezhou            | Windows XP  | 810     |
+| baiyin            | Windows XP  | 803     |
+| zhangjiajie       | Windows XP  | 792     |
+| kelamayi          | Windows XP  | 787     |
+| bazhong           | Windows XP  | 785     |
+| jiuquan           | Windows XP  | 783     |
+| xishuangbanna     | Windows XP  | 771     |
+| shizuishan        | Windows XP  | 768     |
+| xilinguole        | Windows XP  | 753     |
+| pingliang         | Windows XP  | 746     |
+| wuhai             | Windows XP  | 742     |
+| qingyang          | Windows XP  | 731     |
+| tianshui          | Windows XP  | 725     |
+| tacheng           | Windows XP  | 654     |
+| yingtan           | Windows XP  | 644     |
+| chuxiong          | Windows XP  | 638     |
+| wuwei             | Windows XP  | 611     |
+| puer              | Windows XP  | 599     |
+| anshun            | Windows XP  | 595     |
+| hami              | Windows XP  | 594     |
+| tongzhou          | Windows XP  | 575     |
+| wuzhong           | Windows XP  | 565     |
+| longnan           | Windows XP  | 500     |
+| daxinganling      | Windows XP  | 488     |
+| lincang           | Windows XP  | 482     |
+| zhangye           | Windows XP  | 472     |
+| baoshan           | Windows XP  | 444     |
+| boertala          | Windows XP  | 414     |
++-------------------+-------------+---------+--+
+|     cityname      |   osname    |  suma   |
++-------------------+-------------+---------+--+
+| zhongwei          | Windows XP  | 412     |
+| jinchang          | Windows XP  | 408     |
+| dehong            | Windows XP  | 408     |
+| lijiang           | Windows XP  | 407     |
+| dingxi            | Windows XP  | 400     |
+| jiayuguan         | Windows XP  | 395     |
+| sanya             | Windows XP  | 369     |
+| haixi             | Windows XP  | 363     |
+| alashan           | Windows XP  | 356     |
+| aba               | Windows XP  | 345     |
+| linxia            | Windows XP  | 338     |
+| lasa              | Windows XP  | 338     |
+| guyuan            | Windows XP  | 314     |
+| tulufan           | Windows XP  | 309     |
+| chongzuo          | Windows XP  | 304     |
+| aletai            | Windows XP  | 303     |
+| ganzi             | Windows XP  | 283     |
+| hetian            | Windows XP  | 277     |
+| haidong           | Windows XP  | 181     |
+| kezilesukeerkezi  | Windows XP  | 162     |
+| gannan            | Windows XP  | 141     |
+| nujiang           | Windows XP  | 131     |
+| hainanzangzu      | Windows XP  | 91      |
+| diqing            | Windows XP  | 80      |
+| haibei            | Windows XP  | 55      |
+| linzhi            | Windows XP  | 46      |
+| changdu           | Windows XP  | 38      |
+| guoluo            | Windows XP  | 34      |
+| ali               | Windows XP  | 32      |
+| yushu             | Windows XP  | 29      |
+| shannan           | Windows XP  | 28      |
+| naqu              | Windows XP  | 22      |
+| huangnan          | Windows XP  | 21      |
+| rikaze            | Windows XP  | 20      |
++-------------------+-------------+---------+--+
+334 rows selected (20.064 seconds)
+0: jdbc:hive2://localhost:10016> 
+Closing: 0: jdbc:hive2://localhost:10016
+[root@sandbox-hdp src_hive]#

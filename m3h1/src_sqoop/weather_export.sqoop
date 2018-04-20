@@ -1,0 +1,24 @@
+export
+        --connect
+         jdbc:mysql://localhost/sqoop
+       --username
+         root
+       --password
+         hadoop
+       --table
+         weather
+       --staging-table
+         weather_stage
+       --clear-staging-table
+       --export-dir
+         /user/root/ds
+       --input-fields-terminated-by
+         ','
+        --input-lines-terminated-by
+         '\n'
+       --num-mappers
+         11
+       --batch
+       --verbose
+       --outdir
+         java_files

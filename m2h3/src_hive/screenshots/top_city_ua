@@ -1,0 +1,417 @@
+[root@sandbox-hdp src_hive]# sh execute.sh localhost:10016 top_city_ua.sql 
+Connecting to jdbc:hive2://localhost:10016
+Connected to: Spark SQL (version 2.2.0.2.6.3.0-235)
+Driver: Hive JDBC (version 1.2.1000.2.6.3.0-235)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10016> use m2h3;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.079 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> set hive.tez.java.opts=-Xmx1024m;
++---------------------+------------+--+
+|         key         |   value    |
++---------------------+------------+--+
+| hive.tez.java.opts  | -Xmx1024m  |
++---------------------+------------+--+
+1 row selected (0.022 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> ADD JAR m2h3-assembly-1.jar;
++---------+--+
+| result  |
++---------+--+
+| 0       |
++---------+--+
+1 row selected (0.017 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> CREATE TEMPORARY FUNCTION useragent AS 'module2.homework3.UserAgentUDF';
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.01 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> select d.cityname,c.ua,c.suma 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> from city d,
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select a.cityid, a.ua, a.suma from
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016>  (select i.cityid as cityid, i.ua as ua, sum(i.counter) as suma from 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select imp.cityid as cityid,useragent(imp.useragent).ua as ua, count(*) as counter from impression imp group by imp.cityid,imp.useragent) i  group by cityid, ua order by suma desc) a
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> join 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select i.cityid as cityid, max(i.suma) as max from
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select ii.cityid as cityid, ii.ua as ua, sum(ii.counter) as suma from 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select imp.cityid as cityid,useragent(imp.useragent).ua as ua, count(*) as counter from impression imp group by imp.cityid,imp.useragent) ii  group by cityid, ua order by suma desc)i group by cityid) b
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> where a.suma=b.max and a.cityid=b.cityid) c
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> where d.cityid=c.cityid
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> group by cityname,ua,suma
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> order by suma desc;
++-------------------+----------+---------+--+
+|     cityname      |    ua    |  suma   |
++-------------------+----------+---------+--+
+| shenzhen          | Browser  | 250622  |
+| guangzhou         | Browser  | 214902  |
+| dongguan          | Browser  | 112835  |
+| unknown           | Browser  | 110242  |
+| foshan            | Browser  | 74749   |
+| huizhou           | Browser  | 41637   |
+| zhongshan         | Browser  | 39586   |
+| chengdu           | Browser  | 35837   |
+| hangzhou          | Browser  | 35493   |
+| wuhan             | Browser  | 32126   |
+| xian              | Browser  | 31666   |
+| jiangmen          | Browser  | 29964   |
+| shantou           | Browser  | 29057   |
+| zhuhai            | Browser  | 28362   |
+| suzhou_jiangsu    | Browser  | 28158   |
+| zhengzhou         | Browser  | 25252   |
+| nanjing           | Browser  | 22411   |
+| changsha          | Browser  | 21232   |
+| shijiazhuang      | Browser  | 20444   |
+| qingdao           | Browser  | 20053   |
+| zhanjiang         | Browser  | 19884   |
+| nanning           | Browser  | 19279   |
+| wenzhou           | Browser  | 18860   |
+| jinan             | Browser  | 17557   |
+| haerbin           | Browser  | 17119   |
+| jieyang           | Browser  | 16776   |
+| changchun         | Browser  | 16374   |
+| fuzhou_124        | Browser  | 16318   |
+| shenyang          | Browser  | 16012   |
+| zhaoqing          | Browser  | 15800   |
+| ningbo            | Browser  | 15172   |
+| hefei             | Browser  | 14661   |
+| meizhou           | Browser  | 14653   |
+| qingyuan          | Browser  | 14323   |
+| maoming           | Browser  | 14039   |
+| kunming           | Browser  | 13801   |
+| dalian            | Browser  | 13356   |
+| jinhua            | Browser  | 12973   |
+| wuxi              | Browser  | 12723   |
+| taiyuan           | Browser  | 12702   |
+| haikou            | Browser  | 12291   |
+| yantai            | Browser  | 12181   |
+| baoding           | Browser  | 12171   |
+| quanzhou          | Browser  | 11909   |
+| nanchang          | Browser  | 11778   |
+| shaoguan          | Browser  | 11609   |
+| xiamen            | Browser  | 11567   |
+| yangjiang         | Browser  | 11526   |
+| weifang           | Browser  | 11071   |
+| taizhou           | Browser  | 11053   |
+| xuzhou            | Browser  | 10294   |
+| chaozhou          | Browser  | 10010   |
+| tangshan          | Browser  | 9770    |
+| jiaxing           | Browser  | 9465    |
+| linyi             | Browser  | 9334    |
+| heyuan            | Browser  | 9131    |
+| jilin_city        | Browser  | 9116    |
+| guiyang           | Browser  | 9043    |
+| wulumuqi          | Browser  | 8684    |
+| xingtai           | Browser  | 8325    |
+| langfang          | Browser  | 8250    |
+| luoyang           | Browser  | 8141    |
+| changzhou         | Browser  | 8132    |
+| shaoxing          | Browser  | 8070    |
+| nantong           | Browser  | 7893    |
+| jining            | Browser  | 7664    |
+| lanzhou           | Browser  | 7654    |
+| handan            | Browser  | 7325    |
+| liuzhou           | Browser  | 7152    |
+| yangzhou          | Browser  | 7022    |
+| cangzhou          | Browser  | 6866    |
+| zibo              | Browser  | 6860    |
+| shanwei           | Browser  | 6743    |
+| xinxiang          | Browser  | 6314    |
+| guilin            | Browser  | 6268    |
+| yancheng          | Browser  | 5949    |
+| ganzhou           | Browser  | 5816    |
+| yunfu             | Browser  | 5751    |
+| nanyang           | Browser  | 5695    |
+| daqing            | Browser  | 5627    |
+| taian             | Browser  | 5567    |
+| huhehaote         | Browser  | 5486    |
+| zaozhuang         | Browser  | 5413    |
+| anshan            | Browser  | 5362    |
+| jiaozuo           | Browser  | 5311    |
+| mianyang          | Browser  | 5242    |
+| xiangfan          | Browser  | 5167    |
+| weihai            | Browser  | 5103    |
+| zhuzhou           | Browser  | 5092    |
+| yichang           | Browser  | 5053    |
+| putian            | Browser  | 4946    |
+| taizhou_jiangsu   | Browser  | 4876    |
+| heze              | Browser  | 4873    |
+| qinhuangdao       | Browser  | 4794    |
+| qiqihaer          | Browser  | 4783    |
+| pingdingshan      | Browser  | 4772    |
+| hengyang          | Browser  | 4730    |
+| zhenjiang         | Browser  | 4720    |
+| yulin_238         | Browser  | 4704    |
+| yuncheng          | Browser  | 4654    |
++-------------------+----------+---------+--+
+|     cityname      |    ua    |  suma   |
++-------------------+----------+---------+--+
+| liaocheng         | Browser  | 4629    |
+| lianyungang       | Browser  | 4554    |
+| jinzhou           | Browser  | 4501    |
+| mudanjiang        | Browser  | 4462    |
+| dezhou            | Browser  | 4454    |
+| leshan            | Browser  | 4426    |
+| binzhou           | Browser  | 4398    |
+| wuzhou            | Browser  | 4394    |
+| xiaogan           | Browser  | 4383    |
+| anyang            | Browser  | 4366    |
+| dongying          | Browser  | 4313    |
+| xuchang           | Browser  | 4096    |
+| shangqiu          | Browser  | 4063    |
+| yinchuan          | Browser  | 4063    |
+| huaian            | Browser  | 4025    |
+| rizhao            | Browser  | 3950    |
+| linfen            | Browser  | 3949    |
+| yanbian           | Browser  | 3947    |
+| xinyang           | Browser  | 3904    |
+| datong            | Browser  | 3903    |
+| jingzhou          | Browser  | 3896    |
+| yueyang           | Browser  | 3883    |
+| huanggang         | Browser  | 3848    |
+| hengshui          | Browser  | 3843    |
+| huzhou            | Browser  | 3834    |
+| xianyang          | Browser  | 3786    |
+| jinzhongshi       | Browser  | 3763    |
+| deyang            | Browser  | 3734    |
+| siping            | Browser  | 3733    |
+| nanchong          | Browser  | 3674    |
+| chenzhou          | Browser  | 3662    |
+| baoji             | Browser  | 3651    |
+| xiangtan          | Browser  | 3647    |
+| fushun            | Browser  | 3637    |
+| weinan            | Browser  | 3629    |
+| zhoukou           | Browser  | 3611    |
+| jingmen           | Browser  | 3582    |
+| chifeng           | Browser  | 3525    |
+| zhangzhou         | Browser  | 3520    |
+| baotou            | Browser  | 3509    |
+| shiyan            | Browser  | 3473    |
+| yingkou           | Browser  | 3451    |
+| dandong           | Browser  | 3413    |
+| wuhu              | Browser  | 3396    |
+| changde           | Browser  | 3356    |
+| suqian            | Browser  | 3325    |
+| zhangjiakou       | Browser  | 3310    |
+| yichun_134        | Browser  | 3303    |
+| lvliang           | Browser  | 3297    |
+| shaoyang          | Browser  | 3286    |
+| jiujiang          | Browser  | 3271    |
+| huainan           | Browser  | 3264    |
+| benxi             | Browser  | 3248    |
+| kaifeng           | Browser  | 3205    |
+| jiamusi           | Browser  | 3196    |
+| lishui            | Browser  | 3165    |
+| suihua            | Browser  | 3120    |
+| xianning          | Browser  | 3116    |
+| huangshi          | Browser  | 3061    |
+| shangrao          | Browser  | 3048    |
+| sanmenxia         | Browser  | 3001    |
+| bangbu            | Browser  | 2996    |
+| hanzhong          | Browser  | 2988    |
+| huludao           | Browser  | 2974    |
+| fuxin             | Browser  | 2965    |
+| quzhou            | Browser  | 2939    |
+| huaihua           | Browser  | 2903    |
+| yiyang            | Browser  | 2876    |
+| xining            | Browser  | 2854    |
+| yulin_333         | Browser  | 2846    |
+| changzhi          | Browser  | 2828    |
+| zunyi             | Browser  | 2809    |
+| hulunbeier        | Browser  | 2804    |
+| chengde           | Browser  | 2793    |
+| yibin             | Browser  | 2786    |
+| tieling           | Browser  | 2781    |
+| tongliao          | Browser  | 2770    |
+| liuan             | Browser  | 2753    |
+| yongzhou          | Browser  | 2727    |
+| panjin            | Browser  | 2691    |
+| anqing            | Browser  | 2677    |
+| jian              | Browser  | 2660    |
+| chaoyang          | Browser  | 2637    |
+| suzhou            | Browser  | 2624    |
+| luzhou            | Browser  | 2614    |
+| liaoyang          | Browser  | 2613    |
+| guigang           | Browser  | 2609    |
+| yangquan          | Browser  | 2598    |
+| dazhou            | Browser  | 2594    |
+| zhumadian         | Browser  | 2590    |
+| loudi             | Browser  | 2542    |
+| baise             | Browser  | 2510    |
+| tonghua           | Browser  | 2474    |
+| maanshan          | Browser  | 2454    |
+| xinzhou           | Browser  | 2404    |
+| qinzhou           | Browser  | 2402    |
+| longyan           | Browser  | 2400    |
+| luohe             | Browser  | 2380    |
+| jincheng          | Browser  | 2373    |
+| xuancheng         | Browser  | 2372    |
++-------------------+----------+---------+--+
+|     cityname      |    ua    |  suma   |
++-------------------+----------+---------+--+
+| eerduosi          | Browser  | 2353    |
+| honghe            | Browser  | 2339    |
+| songyuan          | Browser  | 2337    |
+| ningde            | Browser  | 2310    |
+| puyang            | Browser  | 2300    |
+| yili              | Browser  | 2271    |
+| sanming           | Browser  | 2212    |
+| hechi             | Browser  | 2197    |
+| fuzhou_134        | Browser  | 2179    |
+| chaohu            | Browser  | 2101    |
+| zigong            | Browser  | 2085    |
+| ezhou             | Browser  | 2065    |
+| shuangyashan      | Browser  | 2042    |
+| jixi              | Browser  | 2040    |
+| beihai            | Browser  | 2028    |
+| qujing            | Browser  | 2013    |
+| suining           | Browser  | 1969    |
+| neijiang          | Browser  | 1962    |
+| nanping           | Browser  | 1956    |
+| enshishi          | Browser  | 1928    |
+| suizhou           | Browser  | 1903    |
+| meishan           | Browser  | 1892    |
+| hebi              | Browser  | 1886    |
+| bozhou            | Browser  | 1870    |
+| baicheng          | Browser  | 1856    |
+| xiangxi           | Browser  | 1854    |
+| liangshan         | Browser  | 1839    |
+| ziyang            | Browser  | 1832    |
+| baishan           | Browser  | 1811    |
+| qiandongnan       | Browser  | 1798    |
+| huaibei           | Browser  | 1793    |
+| bayinguoleng      | Browser  | 1778    |
+| zhoushan          | Browser  | 1746    |
+| tongren           | Browser  | 1725    |
+| yuxi              | Browser  | 1718    |
+| guangyuan         | Browser  | 1716    |
+| panzhihua         | Browser  | 1709    |
+| laiwu             | Browser  | 1704    |
+| changji           | Browser  | 1694    |
+| pingxiang         | Browser  | 1684    |
+| jingdezhen        | Browser  | 1679    |
+| heihe             | Browser  | 1676    |
+| fuyang            | Browser  | 1636    |
+| yichun_65         | Browser  | 1618    |
+| ankang            | Browser  | 1576    |
+| huangshan         | Browser  | 1537    |
+| shangluo          | Browser  | 1512    |
+| qiannan           | Browser  | 1502    |
+| guangan           | Browser  | 1495    |
+| dali              | Browser  | 1481    |
+| tongling          | Browser  | 1454    |
+| xinyu             | Browser  | 1453    |
+| bayannaoer        | Browser  | 1448    |
+| hegang            | Browser  | 1435    |
+| qianxinan         | Browser  | 1416    |
+| bijie             | Browser  | 1415    |
+| akesu             | Browser  | 1397    |
+| laibin            | Browser  | 1375    |
+| yanan             | Browser  | 1351    |
+| chuzhou           | Browser  | 1351    |
+| fangchenggang     | Browser  | 1326    |
+| xingan            | Browser  | 1284    |
+| kashi             | Browser  | 1246    |
+| yaan              | Browser  | 1244    |
+| liupanshui        | Browser  | 1178    |
+| chizhou           | Browser  | 1173    |
+| zhaotong          | Browser  | 1171    |
+| shuozhou          | Browser  | 1149    |
+| liaoyuan          | Browser  | 1129    |
+| hezhou            | Browser  | 1124    |
+| jiuquan           | Browser  | 1116    |
+| kelamayi          | Browser  | 1114    |
+| wenshan           | Browser  | 1097    |
+| wulanchabu        | Browser  | 1092    |
+| bazhong           | Browser  | 1077    |
+| qitaihe           | Browser  | 1072    |
+| baiyin            | Browser  | 1064    |
+| xilinguole        | Browser  | 1041    |
+| zhangjiajie       | Browser  | 1039    |
+| pingliang         | Browser  | 1026    |
+| shizuishan        | Browser  | 1025    |
+| chuxiong          | Browser  | 1021    |
+| qingyang          | Browser  | 1011    |
+| xishuangbanna     | Browser  | 1007    |
+| tianshui          | Browser  | 986     |
+| wuhai             | Browser  | 935     |
+| puer              | Browser  | 860     |
+| yingtan           | Browser  | 852     |
+| hami              | Browser  | 845     |
+| tacheng           | Browser  | 834     |
+| anshun            | Browser  | 812     |
+| wuwei             | Browser  | 784     |
+| tongzhou          | Browser  | 744     |
+| wuzhong           | Browser  | 711     |
+| baoshan           | Browser  | 688     |
+| longnan           | Browser  | 686     |
+| lincang           | Browser  | 678     |
+| zhangye           | Browser  | 664     |
+| lijiang           | Browser  | 664     |
+| dehong            | Browser  | 624     |
++-------------------+----------+---------+--+
+|     cityname      |    ua    |  suma   |
++-------------------+----------+---------+--+
+| daxinganling      | Browser  | 616     |
+| jiayuguan         | Browser  | 593     |
+| jinchang          | Browser  | 572     |
+| dingxi            | Browser  | 544     |
+| lasa              | Browser  | 531     |
+| sanya             | Browser  | 527     |
+| boertala          | Browser  | 525     |
+| haixi             | Browser  | 524     |
+| aba               | Browser  | 517     |
+| zhongwei          | Browser  | 508     |
+| alashan           | Browser  | 485     |
+| ganzi             | Browser  | 450     |
+| linxia            | Browser  | 447     |
+| guyuan            | Browser  | 433     |
+| tulufan           | Browser  | 411     |
+| aletai            | Browser  | 408     |
+| chongzuo          | Browser  | 370     |
+| hetian            | Browser  | 354     |
+| kezilesukeerkezi  | Browser  | 236     |
+| haidong           | Browser  | 236     |
+| gannan            | Browser  | 202     |
+| nujiang           | Browser  | 169     |
+| hainanzangzu      | Browser  | 135     |
+| diqing            | Browser  | 124     |
+| haibei            | Browser  | 77      |
+| linzhi            | Browser  | 62      |
+| changdu           | Browser  | 50      |
+| guoluo            | Browser  | 49      |
+| ali               | Browser  | 47      |
+| shannan           | Browser  | 39      |
+| yushu             | Browser  | 39      |
+| rikaze            | Browser  | 30      |
+| huangnan          | Browser  | 29      |
+| naqu              | Browser  | 25      |
++-------------------+----------+---------+--+
+334 rows selected (19.746 seconds)
+0: jdbc:hive2://localhost:10016> 
+Closing: 0: jdbc:hive2://localhost:10016
+[root@sandbox-hdp src_hive]#

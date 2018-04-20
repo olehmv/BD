@@ -1,0 +1,6 @@
+Usage:
+    1)Put DataSet files(2007.csv, airports.csv, carriers.csv) in /home/hive.
+    2)Run execute.sh script from src directory:
+        usage - sh execute.sh <hive-server> <hive script file> <execute engine>
+	example: sh execute.sh localhost:10000 table_init.sql tez
+             sh execute.sh localhost:10000 ***queries.sql mr

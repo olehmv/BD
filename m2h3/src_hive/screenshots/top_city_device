@@ -1,0 +1,415 @@
+[root@sandbox-hdp src_hive]# sh execute.sh localhost:10016 top_city_device.sql 
+Connecting to jdbc:hive2://localhost:10016
+Connected to: Spark SQL (version 2.2.0.2.6.3.0-235)
+Driver: Hive JDBC (version 1.2.1000.2.6.3.0-235)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10016> use m2h3;
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.095 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> set hive.tez.java.opts=-Xmx1024m;
++---------------------+------------+--+
+|         key         |   value    |
++---------------------+------------+--+
+| hive.tez.java.opts  | -Xmx1024m  |
++---------------------+------------+--+
+1 row selected (0.014 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> ADD JAR m2h3-assembly-1.jar;
++---------+--+
+| result  |
++---------+--+
+| 0       |
++---------+--+
+1 row selected (0.016 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> CREATE TEMPORARY FUNCTION useragent AS 'module2.homework3.UserAgentUDF';
++---------+--+
+| Result  |
++---------+--+
++---------+--+
+No rows selected (0.018 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> select d.cityname,c.device,c.suma 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> from city d,
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select a.cityid, a.device, a.suma from
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016>  (select i.cityid as cityid, i.device as device, sum(i.counter) as suma from 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select imp.cityid as cityid,useragent(imp.useragent).device as device, count(*) as counter from impression imp group by imp.cityid,imp.useragent) i  group by cityid, device order by suma desc) a
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> join 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select i.cityid as cityid, max(i.suma) as max from
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select ii.cityid as cityid, ii.device as device, sum(ii.counter) as suma from 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> (select imp.cityid as cityid,useragent(imp.useragent).device as device, count(*) as counter from impression imp group by imp.cityid,imp.useragent) ii  group by cityid, device order by suma desc)i group by cityid) b
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> where a.suma=b.max and a.cityid=b.cityid) c
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> where d.cityid=c.cityid
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> group by cityname,device,suma
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> order by suma desc;
++-------------------+-----------+---------+--+
+|     cityname      |  device   |  suma   |
++-------------------+-----------+---------+--+
+| shenzhen          | Computer  | 249436  |
+| guangzhou         | Computer  | 213471  |
+| dongguan          | Computer  | 112392  |
+| unknown           | Computer  | 108875  |
+| foshan            | Computer  | 74403   |
+| huizhou           | Computer  | 41434   |
+| zhongshan         | Computer  | 39419   |
+| chengdu           | Computer  | 35210   |
+| hangzhou          | Computer  | 34904   |
+| wuhan             | Computer  | 31648   |
+| xian              | Computer  | 31250   |
+| jiangmen          | Computer  | 29824   |
+| shantou           | Computer  | 28903   |
+| suzhou_jiangsu    | Computer  | 27715   |
+| zhuhai            | Computer  | 27616   |
+| zhengzhou         | Computer  | 24899   |
+| nanjing           | Computer  | 21993   |
+| changsha          | Computer  | 20589   |
+| shijiazhuang      | Computer  | 20161   |
+| qingdao           | Computer  | 19847   |
+| zhanjiang         | Computer  | 19790   |
+| nanning           | Computer  | 19050   |
+| wenzhou           | Computer  | 18248   |
+| jinan             | Computer  | 17341   |
+| haerbin           | Computer  | 16826   |
+| jieyang           | Computer  | 16712   |
+| changchun         | Computer  | 16128   |
+| fuzhou_124        | Computer  | 15872   |
+| zhaoqing          | Computer  | 15758   |
+| shenyang          | Computer  | 15746   |
+| ningbo            | Computer  | 14805   |
+| meizhou           | Computer  | 14605   |
+| hefei             | Computer  | 14482   |
+| qingyuan          | Computer  | 14260   |
+| maoming           | Computer  | 13995   |
+| kunming           | Computer  | 13515   |
+| dalian            | Computer  | 13246   |
+| jinhua            | Computer  | 12699   |
+| wuxi              | Computer  | 12495   |
+| taiyuan           | Computer  | 12334   |
+| haikou            | Computer  | 12081   |
+| yantai            | Computer  | 12040   |
+| baoding           | Computer  | 12009   |
+| quanzhou          | Computer  | 11692   |
+| shaoguan          | Computer  | 11558   |
+| nanchang          | Computer  | 11532   |
+| yangjiang         | Computer  | 11481   |
+| xiamen            | Computer  | 11329   |
+| weifang           | Computer  | 11014   |
+| taizhou           | Computer  | 10770   |
+| xuzhou            | Computer  | 10175   |
+| chaozhou          | Computer  | 9962    |
+| tangshan          | Computer  | 9634    |
+| jiaxing           | Computer  | 9295    |
+| linyi             | Computer  | 9256    |
+| heyuan            | Computer  | 9107    |
+| jilin_city        | Computer  | 8984    |
+| guiyang           | Computer  | 8790    |
+| wulumuqi          | Computer  | 8573    |
+| xingtai           | Computer  | 8180    |
+| langfang          | Computer  | 8068    |
+| luoyang           | Computer  | 8045    |
+| changzhou         | Computer  | 7998    |
+| shaoxing          | Computer  | 7924    |
+| nantong           | Computer  | 7780    |
+| jining            | Computer  | 7593    |
+| lanzhou           | Computer  | 7532    |
+| handan            | Computer  | 7246    |
+| liuzhou           | Computer  | 7075    |
+| yangzhou          | Computer  | 6925    |
+| zibo              | Computer  | 6788    |
+| cangzhou          | Computer  | 6785    |
+| shanwei           | Computer  | 6703    |
+| xinxiang          | Computer  | 6236    |
+| guilin            | Computer  | 6186    |
+| yancheng          | Computer  | 5885    |
+| ganzhou           | Computer  | 5734    |
+| yunfu             | Computer  | 5721    |
+| nanyang           | Computer  | 5626    |
+| daqing            | Computer  | 5526    |
+| taian             | Computer  | 5512    |
+| huhehaote         | Computer  | 5387    |
+| zaozhuang         | Computer  | 5369    |
+| anshan            | Computer  | 5277    |
+| jiaozuo           | Computer  | 5248    |
+| mianyang          | Computer  | 5145    |
+| xiangfan          | Computer  | 5093    |
+| weihai            | Computer  | 5063    |
+| zhuzhou           | Computer  | 5016    |
+| yichang           | Computer  | 4974    |
+| putian            | Computer  | 4899    |
+| heze              | Computer  | 4846    |
+| taizhou_jiangsu   | Computer  | 4819    |
+| qinhuangdao       | Computer  | 4726    |
+| pingdingshan      | Computer  | 4725    |
+| qiqihaer          | Computer  | 4694    |
+| hengyang          | Computer  | 4665    |
+| zhenjiang         | Computer  | 4652    |
+| yulin_238         | Computer  | 4651    |
+| yuncheng          | Computer  | 4602    |
++-------------------+-----------+---------+--+
+|     cityname      |  device   |  suma   |
++-------------------+-----------+---------+--+
+| liaocheng         | Computer  | 4586    |
+| lianyungang       | Computer  | 4503    |
+| jinzhou           | Computer  | 4457    |
+| dezhou            | Computer  | 4421    |
+| mudanjiang        | Computer  | 4383    |
+| binzhou           | Computer  | 4370    |
+| wuzhou            | Computer  | 4348    |
+| leshan            | Computer  | 4338    |
+| xiaogan           | Computer  | 4299    |
+| anyang            | Computer  | 4291    |
+| dongying          | Computer  | 4268    |
+| xuchang           | Computer  | 4045    |
+| yinchuan          | Computer  | 4029    |
+| shangqiu          | Computer  | 4004    |
+| huaian            | Computer  | 3948    |
+| rizhao            | Computer  | 3913    |
+| linfen            | Computer  | 3900    |
+| yanbian           | Computer  | 3862    |
+| xinyang           | Computer  | 3852    |
+| datong            | Computer  | 3837    |
+| jingzhou          | Computer  | 3825    |
+| yueyang           | Computer  | 3812    |
+| hengshui          | Computer  | 3807    |
+| huanggang         | Computer  | 3776    |
+| huzhou            | Computer  | 3757    |
+| xianyang          | Computer  | 3743    |
+| jinzhongshi       | Computer  | 3696    |
+| siping            | Computer  | 3664    |
+| deyang            | Computer  | 3663    |
+| chenzhou          | Computer  | 3619    |
+| weinan            | Computer  | 3610    |
+| baoji             | Computer  | 3603    |
+| nanchong          | Computer  | 3603    |
+| xiangtan          | Computer  | 3593    |
+| fushun            | Computer  | 3571    |
+| zhoukou           | Computer  | 3557    |
+| jingmen           | Computer  | 3507    |
+| chifeng           | Computer  | 3496    |
+| zhangzhou         | Computer  | 3456    |
+| baotou            | Computer  | 3450    |
+| shiyan            | Computer  | 3437    |
+| yingkou           | Computer  | 3399    |
+| wuhu              | Computer  | 3373    |
+| dandong           | Computer  | 3349    |
+| changde           | Computer  | 3306    |
+| suqian            | Computer  | 3288    |
+| zhangjiakou       | Computer  | 3263    |
+| lvliang           | Computer  | 3242    |
+| yichun_134        | Computer  | 3240    |
+| huainan           | Computer  | 3230    |
+| shaoyang          | Computer  | 3228    |
+| jiujiang          | Computer  | 3209    |
+| benxi             | Computer  | 3183    |
+| kaifeng           | Computer  | 3159    |
+| jiamusi           | Computer  | 3149    |
+| suihua            | Computer  | 3082    |
+| lishui            | Computer  | 3048    |
+| huangshi          | Computer  | 3032    |
+| xianning          | Computer  | 3017    |
+| sanmenxia         | Computer  | 2974    |
+| hanzhong          | Computer  | 2973    |
+| shangrao          | Computer  | 2973    |
+| bangbu            | Computer  | 2956    |
+| huludao           | Computer  | 2934    |
+| fuxin             | Computer  | 2933    |
+| quzhou            | Computer  | 2870    |
+| huaihua           | Computer  | 2866    |
+| yulin_333         | Computer  | 2815    |
+| xining            | Computer  | 2811    |
+| yiyang            | Computer  | 2803    |
+| hulunbeier        | Computer  | 2776    |
+| changzhi          | Computer  | 2772    |
+| zunyi             | Computer  | 2766    |
+| tongliao          | Computer  | 2749    |
+| chengde           | Computer  | 2749    |
+| yibin             | Computer  | 2744    |
+| liuan             | Computer  | 2738    |
+| tieling           | Computer  | 2737    |
+| yongzhou          | Computer  | 2689    |
+| anqing            | Computer  | 2668    |
+| panjin            | Computer  | 2650    |
+| chaoyang          | Computer  | 2607    |
+| jian              | Computer  | 2605    |
+| suzhou            | Computer  | 2592    |
+| guigang           | Computer  | 2587    |
+| luzhou            | Computer  | 2571    |
+| liaoyang          | Computer  | 2563    |
+| yangquan          | Computer  | 2553    |
+| zhumadian         | Computer  | 2552    |
+| dazhou            | Computer  | 2542    |
+| loudi             | Computer  | 2500    |
+| baise             | Computer  | 2498    |
+| tonghua           | Computer  | 2444    |
+| maanshan          | Computer  | 2421    |
+| qinzhou           | Computer  | 2375    |
+| xinzhou           | Computer  | 2373    |
+| luohe             | Computer  | 2344    |
+| longyan           | Computer  | 2337    |
+| xuancheng         | Computer  | 2335    |
+| jincheng          | Computer  | 2335    |
++-------------------+-----------+---------+--+
+|     cityname      |  device   |  suma   |
++-------------------+-----------+---------+--+
+| eerduosi          | Computer  | 2333    |
+| songyuan          | Computer  | 2315    |
+| honghe            | Computer  | 2311    |
+| puyang            | Computer  | 2266    |
+| yili              | Computer  | 2259    |
+| ningde            | Computer  | 2239    |
+| hechi             | Computer  | 2184    |
+| sanming           | Computer  | 2149    |
+| fuzhou_134        | Computer  | 2142    |
+| chaohu            | Computer  | 2082    |
+| zigong            | Computer  | 2058    |
+| ezhou             | Computer  | 2042    |
+| shuangyashan      | Computer  | 2024    |
+| jixi              | Computer  | 2011    |
+| beihai            | Computer  | 2001    |
+| qujing            | Computer  | 1987    |
+| suining           | Computer  | 1940    |
+| neijiang          | Computer  | 1937    |
+| enshishi          | Computer  | 1917    |
+| nanping           | Computer  | 1904    |
+| suizhou           | Computer  | 1881    |
+| meishan           | Computer  | 1869    |
+| hebi              | Computer  | 1855    |
+| bozhou            | Computer  | 1847    |
+| xiangxi           | Computer  | 1846    |
+| baicheng          | Computer  | 1843    |
+| liangshan         | Computer  | 1810    |
+| baishan           | Computer  | 1796    |
+| ziyang            | Computer  | 1791    |
+| qiandongnan       | Computer  | 1773    |
+| huaibei           | Computer  | 1766    |
+| bayinguoleng      | Computer  | 1763    |
+| tongren           | Computer  | 1699    |
+| guangyuan         | Computer  | 1694    |
+| yuxi              | Computer  | 1693    |
+| panzhihua         | Computer  | 1690    |
+| laiwu             | Computer  | 1689    |
+| zhoushan          | Computer  | 1684    |
+| changji           | Computer  | 1678    |
+| heihe             | Computer  | 1661    |
+| pingxiang         | Computer  | 1647    |
+| jingdezhen        | Computer  | 1646    |
+| fuyang            | Computer  | 1616    |
+| yichun_65         | Computer  | 1602    |
+| ankang            | Computer  | 1557    |
+| huangshan         | Computer  | 1511    |
+| shangluo          | Computer  | 1489    |
+| qiannan           | Computer  | 1479    |
+| dali              | Computer  | 1461    |
+| guangan           | Computer  | 1461    |
+| tongling          | Computer  | 1443    |
+| bayannaoer        | Computer  | 1427    |
+| xinyu             | Computer  | 1427    |
+| hegang            | Computer  | 1423    |
+| qianxinan         | Computer  | 1401    |
+| bijie             | Computer  | 1395    |
+| akesu             | Computer  | 1373    |
+| laibin            | Computer  | 1367    |
+| chuzhou           | Computer  | 1344    |
+| yanan             | Computer  | 1342    |
+| fangchenggang     | Computer  | 1308    |
+| xingan            | Computer  | 1264    |
+| kashi             | Computer  | 1233    |
+| yaan              | Computer  | 1220    |
+| liupanshui        | Computer  | 1165    |
+| chizhou           | Computer  | 1160    |
+| zhaotong          | Computer  | 1147    |
+| shuozhou          | Computer  | 1136    |
+| liaoyuan          | Computer  | 1123    |
+| hezhou            | Computer  | 1113    |
+| jiuquan           | Computer  | 1109    |
+| wenshan           | Computer  | 1095    |
+| kelamayi          | Computer  | 1087    |
+| wulanchabu        | Computer  | 1079    |
+| qitaihe           | Computer  | 1069    |
+| bazhong           | Computer  | 1057    |
+| baiyin            | Computer  | 1050    |
+| xilinguole        | Computer  | 1031    |
+| zhangjiajie       | Computer  | 1025    |
+| shizuishan        | Computer  | 1016    |
+| pingliang         | Computer  | 1014    |
+| chuxiong          | Computer  | 1005    |
+| qingyang          | Computer  | 996     |
+| xishuangbanna     | Computer  | 995     |
+| tianshui          | Computer  | 975     |
+| wuhai             | Computer  | 930     |
+| puer              | Computer  | 854     |
+| yingtan           | Computer  | 833     |
+| tacheng           | Computer  | 830     |
+| hami              | Computer  | 827     |
+| anshun            | Computer  | 807     |
+| wuwei             | Computer  | 778     |
+| tongzhou          | Computer  | 736     |
+| wuzhong           | Computer  | 703     |
+| longnan           | Computer  | 686     |
+| baoshan           | Computer  | 680     |
+| lincang           | Computer  | 669     |
+| zhangye           | Computer  | 661     |
+| lijiang           | Computer  | 656     |
+| daxinganling      | Computer  | 607     |
++-------------------+-----------+---------+--+
+|     cityname      |  device   |  suma   |
++-------------------+-----------+---------+--+
+| dehong            | Computer  | 606     |
+| jiayuguan         | Computer  | 582     |
+| jinchang          | Computer  | 567     |
+| dingxi            | Computer  | 542     |
+| lasa              | Computer  | 528     |
+| haixi             | Computer  | 522     |
+| boertala          | Computer  | 521     |
+| sanya             | Computer  | 520     |
+| aba               | Computer  | 508     |
+| zhongwei          | Computer  | 506     |
+| alashan           | Computer  | 483     |
+| linxia            | Computer  | 445     |
+| ganzi             | Computer  | 441     |
+| guyuan            | Computer  | 432     |
+| tulufan           | Computer  | 408     |
+| aletai            | Computer  | 406     |
+| chongzuo          | Computer  | 370     |
+| hetian            | Computer  | 351     |
+| kezilesukeerkezi  | Computer  | 234     |
+| haidong           | Computer  | 232     |
+| gannan            | Computer  | 202     |
+| nujiang           | Computer  | 169     |
+| hainanzangzu      | Computer  | 132     |
+| diqing            | Computer  | 118     |
+| haibei            | Computer  | 76      |
+| linzhi            | Computer  | 62      |
+| changdu           | Computer  | 49      |
+| guoluo            | Computer  | 48      |
+| ali               | Computer  | 47      |
+| shannan           | Computer  | 39      |
+| yushu             | Computer  | 39      |
+| huangnan          | Computer  | 29      |
+| rikaze            | Computer  | 29      |
+| naqu              | Computer  | 25      |
++-------------------+-----------+---------+--+
+334 rows selected (19.968 seconds)
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+0: jdbc:hive2://localhost:10016> 
+Closing: 0: jdbc:hive2://localhost:10016
+[root@sandbox-hdp src_hive]# 

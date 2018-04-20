@@ -1,0 +1,1 @@
+flume-ng agent -n $1 -c $2 -f $3 

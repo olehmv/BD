@@ -1,0 +1,256 @@
+[root@sandbox-hdp src]# ls -la
+total 20
+drwxr-xr-x 2 root root 4096 Jan  8  2018 .
+drwxr-xr-x 3 root root 4096 Jan  8 12:49 ..
+-rw-r--r-- 1 root root   52 Jan  8  2018 execute.sh
+-rw-r--r-- 1 root root  535 Jan  8 12:48 Find_all_carriers_who_cancelled_more_than_1_flights_during_2007_order_them_from_biggest_to_lowest_by_number_of_cancelled_flights_and_list_in_each_record_all_departure_cities_where_cancellation_happened.sql
+-rw-r--r-- 1 root root 2723 Jan  8  2018 table_init.sql
+[root@sandbox-hdp src]# ls -la /home/hive | grep csv
+-rw-r--r-- 1 root root   702878193 Jan  8 12:22 2007.csv
+-rw-r--r-- 1 root root      244438 Jan  8 12:23 airports.csv
+-rw-r--r-- 1 root root       43758 Jan  8 12:23 carriers.csv
+[root@sandbox-hdp src]# sh execute.sh localhost:10000 table_init.sql tez
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.2.1000.2.6.3.0-235)
+Driver: Hive JDBC (version 1.2.1000.2.6.3.0-235)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000> CREATE DATABASE IF NOT EXISTS m2h2;
+No rows affected (0.346 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> use m2h2;
+No rows affected (0.28 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> set hive.exec.dynamic.partition.mode=nonstrict;
+No rows affected (0.004 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> set hive.tez.java.opts=-Xmx1024m;
+No rows affected (0.003 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CREATE TABLE IF NOT EXISTS carriers (
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>   code varchar(5),
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>   description string
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> )
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> WITH SERDEPROPERTIES (
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>    "separatorChar" = "\,",
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>    "quoteChar"     = "\""
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> ) 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> TBLPROPERTIES ("skip.header.line.count"="1");
+No rows affected (0.395 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> LOAD DATA LOCAL INPATH 'carriers.csv'  INTO TABLE carriers;
+INFO  : Loading data to table m2h2.carriers from file:/home/hive/carriers.csv
+INFO  : Table m2h2.carriers stats: [numFiles=1, numRows=0, totalSize=43758, rawDataSize=0]
+No rows affected (0.401 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CREATE TABLE IF NOT EXISTS airports (
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>   iata varchar(5),
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>   airport string,
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>   city string,
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>   state varchar(5),
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>   country string,
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>   lat float,
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>   long float
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> )
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> WITH SERDEPROPERTIES (
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>    "separatorChar" = "\,",
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>    "quoteChar"     = "\""
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> ) 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> TBLPROPERTIES ("skip.header.line.count"="1");
+No rows affected (0.342 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> LOAD DATA LOCAL INPATH 'airports.csv'  INTO TABLE airports;
+INFO  : Loading data to table m2h2.airports from file:/home/hive/airports.csv
+INFO  : Table m2h2.airports stats: [numFiles=1, numRows=0, totalSize=244438, rawDataSize=0]
+No rows affected (0.41 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CREATE TABLE IF NOT EXISTS flight2007(Year INT, Month INT, DayofMonth INT, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> DayOfWeek INT, DepTime INT,    CRSDepTime INT,    ArrTime INT, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CRSArrTime INT, UniqueCarrier String, FlightNum INT,
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> TailNum String,    ActualElapsedTime INT, CRSElapsedTime INT, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> AirTime INT, ArrDelay INT,    DepDelay INT, Origin String, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> Dest String, Distance INT, TaxiIn INT, TaxiOut INT,    Cancelled INT, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CancellationCode INT, Diverted INT, CarrierDelay INT, WeatherDelay INT,    
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> NASDelay INT, SecurityDelay INT, LateAircraftDela INT)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> WITH SERDEPROPERTIES (
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>    "separatorChar" = "\,",
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000>    "quoteChar"     = "\""
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> ) 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> TBLPROPERTIES ("skip.header.line.count"="1");
+No rows affected (0.376 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> LOAD DATA LOCAL INPATH '2007.csv'  INTO TABLE flight2007;
+INFO  : Loading data to table m2h2.flight2007 from file:/home/hive/2007.csv
+INFO  : Table m2h2.flight2007 stats: [numFiles=1, numRows=0, totalSize=702878193, rawDataSize=0]
+No rows affected (1.952 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CREATE TABLE IF NOT EXISTS carriers_orc (Code String, Description String)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> STORED AS ORC;
+No rows affected (0.327 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> INSERT INTO carriers_orc SELECT * FROM carriers;
+INFO  : Tez session hasn't been created yet. Opening session
+INFO  : Dag name: INSERT INTO carriers_orc SELECT *...carriers(Stage-1)
+INFO  : Status: Running (Executing on YARN cluster with App id application_1515399199940_0048)
+
+--------------------------------------------------------------------------------
+        VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+--------------------------------------------------------------------------------
+Map 1 ..........   SUCCEEDED      1          1        0        0       0       0
+--------------------------------------------------------------------------------
+VERTICES: 01/01  [==========================>>] 100%  ELAPSED TIME: 4.57 s     
+--------------------------------------------------------------------------------
+INFO  : Loading data to table m2h2.carriers_orc from hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/m2h2.db/carriers_orc/.hive-staging_hive_2018-01-08_12-53-04_260_5370239618047552483-78/-ext-10000
+INFO  : Table m2h2.carriers_orc stats: [numFiles=1, numRows=1491, totalSize=16229, rawDataSize=281799]
+No rows affected (11.093 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CREATE TABLE IF NOT EXISTS airports_orc(iata String, airport String, city String, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> state String, country String, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> lat FLOAT, long FLOAT)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CLUSTERED BY(state) SORTED BY (city ASC) INTO 52 BUCKETS
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> STORED AS ORC;
+No rows affected (0.376 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> INSERT INTO airports_orc SELECT * FROM airports;
+INFO  : Session is already open
+INFO  : Dag name: INSERT INTO airports_orc SELECT *...airports(Stage-1)
+INFO  : Status: Running (Executing on YARN cluster with App id application_1515399199940_0048)
+
+--------------------------------------------------------------------------------
+        VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+--------------------------------------------------------------------------------
+Map 1 ..........   SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ......   SUCCEEDED     52         52        0        0       0       0
+--------------------------------------------------------------------------------
+VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 12.30 s    
+--------------------------------------------------------------------------------
+INFO  : Loading data to table m2h2.airports_orc from hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/m2h2.db/airports_orc/.hive-staging_hive_2018-01-08_12-53-15_761_392057651328645588-78/-ext-10000
+INFO  : Table m2h2.airports_orc stats: [numFiles=32, numRows=3376, totalSize=113186, rawDataSize=1552487]
+No rows affected (12.827 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CREATE TABLE IF NOT EXISTS flight2007_orc(Year INT, Month INT, DayofMonth INT, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> DayOfWeek INT, DepTime INT,    CRSDepTime INT,    ArrTime INT, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CRSArrTime INT, UniqueCarrier String, FlightNum INT,
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> TailNum String,    ActualElapsedTime INT, CRSElapsedTime INT, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> AirTime INT, ArrDelay INT,    DepDelay INT, Origin String, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> Dest String, Distance INT, TaxiIn INT, TaxiOut INT,    Cancelled INT, 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CancellationCode INT, Diverted INT, CarrierDelay INT, WeatherDelay INT,    
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> NASDelay INT, SecurityDelay INT, LateAircraftDela INT)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> CLUSTERED BY(Month) SORTED BY (DayofMonth ASC) INTO 12 BUCKETS
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> STORED AS ORC;
+No rows affected (0.36 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> INSERT INTO  flight2007_orc SELECT * FROM flight2007;
+INFO  : Session is already open
+INFO  : Dag name: INSERT INTO  flight2007_orc SEL...flight2007(Stage-1)
+INFO  : Status: Running (Executing on YARN cluster with App id application_1515399199940_0048)
+
+--------------------------------------------------------------------------------
+        VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+--------------------------------------------------------------------------------
+Map 1 ..........   SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ......   SUCCEEDED     12         12        0        0       0       0
+--------------------------------------------------------------------------------
+VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 142.74 s   
+--------------------------------------------------------------------------------
+INFO  : Loading data to table m2h2.flight2007_orc from hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/m2h2.db/flight2007_orc/.hive-staging_hive_2018-01-08_12-53-28_996_7810916957336659007-78/-ext-10000
+INFO  : Table m2h2.flight2007_orc stats: [numFiles=12, numRows=7453215, totalSize=153702319, rawDataSize=3312543883]
+No rows affected (143.243 seconds)
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+0: jdbc:hive2://localhost:10000> 
+Closing: 0: jdbc:hive2://localhost:10000
+[root@sandbox-hdp src]# beeline -u jdbc:hive2://localhost:10000 -e "use m2h2; show tables;" 
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.2.1000.2.6.3.0-235)
+Driver: Hive JDBC (version 1.2.1000.2.6.3.0-235)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+No rows affected (0.325 seconds)
++-----------------+--+
+|    tab_name     |
++-----------------+--+
+| airports        |
+| airports_orc    |
+| carriers        |
+| carriers_orc    |
+| flight2007      |
+| flight2007_orc  |
++-----------------+--+
+6 rows selected (0.351 seconds)
+Beeline version 1.2.1000.2.6.3.0-235 by Apache Hive
+Closing: 0: jdbc:hive2://localhost:10000
+[root@sandbox-hdp src]#
